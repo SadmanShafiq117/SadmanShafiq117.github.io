@@ -1,5 +1,5 @@
 ---
-title: "SadmanShafiq117.github.io"
+title: "Sadman Shafiq"
 ---
 
 This is a Quarto website.

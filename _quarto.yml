@@ -9,8 +9,8 @@ website:
         text: Home
       - href: about.qmd
         text: About
-      - href: https://github.com/SadmanShaf117/SadmanShafiq117.github.io
-        text: "GitHub"
+      - href: https://SadmanShafiq117.github.io/
+        text: "GitHub Website Link"
 
 format:
   html:
