@@ -1,0 +1,262 @@
+---
+title: "Assignment1"
+layout: page
+---
+
+# The Anscombe example:
+
+```{r, echo=TRUE}
+## Objective: Identify data or model problems using visualization
+## Anscombe (1973) Quartlet
+
+data(anscombe)  
+summary(anscombe)
+
+```
+```{r, echo=TRUE}
+#Alternatively
+plot(anscombe$x1,anscombe$y1)
+summary(anscombe)
+```
+
+```{r, echo=TRUE}
+#The Model Objects
+lm1 <- lm(y1 ~ x1, data=anscombe)
+summary(lm1)
+
+lm2 <- lm(y2 ~ x2, data=anscombe)
+summary(lm2)
+
+lm3 <- lm(y3 ~ x3, data=anscombe)
+summary(lm3)
+
+lm4 <- lm(y4 ~ x4, data=anscombe)
+summary(lm4)
+
+#Plot
+plot(anscombe$x1,anscombe$y1)
+abline(coefficients(lm1))
+
+plot(anscombe$x2,anscombe$y2)
+abline(coefficients(lm2))
+
+plot(anscombe$x3,anscombe$y3)
+abline(coefficients(lm3))
+
+plot(anscombe$x4,anscombe$y4)
+abline(coefficients(lm4))
+```
+```{r, echo=TRUE}
+#According to Help file
+ff <- y ~ x
+mods <- setNames(as.list(1:4), paste0("lm", 1:4))
+
+# Plot using for loop
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  ## or   ff[[2]] <- as.name(paste0("y", i))
+  ##      ff[[3]] <- as.name(paste0("x", i))
+  mods[[i]] <- lmi <- lm(ff, data = anscombe)
+  print(anova(lmi))
+}
+
+sapply(mods, coef)  # Note the use of this function
+
+lapply(mods, function(fm) coef(summary(fm)))
+
+#Now, the plots
+
+op <- par(mfrow = c(2, 2), mar = 0.1+c(4,4,1,1), oma =  c(0, 0, 2, 0))
+
+# Plot charts using for loop
+for(i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y","x"), i), as.name)
+  plot(ff, data = anscombe, col = "red", pch = 21, bg = "orange", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13))
+  abline(mods[[i]], col = "blue")
+}
+mtext("Anscombe's 4 Regression data sets", outer = TRUE, cex = 1.5)
+
+```
+
+
+# Generative Art
+
+```{r, echo=TRUE}
+library(ggplot2)
+library(dplyr)
+
+
+set.seed(123)
+
+# random data for the oval blocks
+data <- data.frame(
+  x = runif(100, -5, 5),
+  y = runif(100, -5, 5),
+  width = runif(100, 1, 2),
+  height = runif(100, 1, 2),
+  color = sample(c("red", "blue", "green", "purple", "orange"), 100, replace = TRUE)
+)
+
+#  the generative art with oval blocks and thick colors
+ggplot(data) +
+  #  oval blocks
+  geom_tile(aes(x = x, y = y, width = width, height = height, fill = color), 
+            color = "black", size = 3) +  # Thick border color
+  scale_fill_manual(values = c("red", "blue", "green", "purple", "orange")) +
+  theme_void() +  # Remove axes and grid
+  theme(legend.position = "none") +
+  labs(title = "Generative Art with Oval Blocks and Thick Colors")
+
+#  random data for the oval blocks with rotation and transparency
+data1 <- data.frame(
+  x = runif(100, -5, 5),
+  y = runif(100, -5, 5),
+  width = runif(100, 1, 2),
+  height = runif(100, 1, 2),
+  angle = runif(100, 0, 360),  # Random rotation angles
+  color = sample(c("red", "blue", "green", "purple", "orange"), 100, replace = TRUE),
+  alpha = runif(100, 0.3, 1)  # Random transparency levels
+)
+
+#  the generative art with oval blocks, rotation, and transparency
+ggplot(data1) +
+  #  oval blocks with random rotation and transparency
+  geom_tile(aes(x = x, y = y, width = width, height = height, fill = color, alpha = alpha), 
+            color = "black", size = 3) +
+  coord_cartesian(xlim = c(-6, 6), ylim = c(-6, 6)) +  # Set axis limits
+  scale_fill_manual(values = c("red", "blue", "green", "purple", "orange")) +
+  scale_alpha_continuous(range = c(0.3, 1)) +  # Control transparency
+  theme_void() +  # Remove axes and grid
+  theme(legend.position = "none") +
+  labs(title = "Generative Art with Rotated Oval Blocks and Transparency")
+
+
+#  random data for the circles
+data2 <- data.frame(
+  x = runif(100, -5, 5),
+  y = runif(100, -5, 5),
+  radius = runif(100, 0.5, 1.5),  # Random radius size
+  color = sample(c("red", "blue", "green", "purple", "orange"), 100, replace = TRUE)
+)
+
+#  the generative art with thick circles and color gradients
+ggplot(data2) +
+  #  circles with random position and radius
+  geom_point(aes(x = x, y = y, size = radius, color = color), shape = 16, alpha = 0.8) +
+  scale_size_continuous(range = c(5, 15)) +  # Control the circle size
+  scale_color_manual(values = c("red", "blue", "green", "purple", "orange")) +
+  theme_void() +  # Remove axes and grid
+  theme(legend.position = "none") +
+  labs(title = "Generative Art with Random Circles and Thick Colors")
+
+```
+
+# Leaf in the Fall
+
+I chose the color Red
+```{r, echo=FALSE}
+## Data Visualization
+## Objective: Create graphics with R
+## Title: Fall color
+# Credit: https://fronkonstin.com
+
+# Install packages
+#install.packages(c("gsubfn", "proto", "tidyverse"))
+
+library(gsubfn)
+library(tidyverse)
+
+# Define elements in plant art
+# Each image corresponds to a different axiom, rules, angle and depth
+
+# Leaf of Fall
+
+axiom="X"
+rules=list("X"="F-[[X]+X]+F[+FX]-X", "F"="FF")
+angle=22.5
+depth=6
+
+
+for (i in 1:depth) axiom=gsubfn(".", rules, axiom)
+
+actions=str_extract_all(axiom, "\\d*\\+|\\d*\\-|F|L|R|\\[|\\]|\\|") %>% unlist
+
+status=data.frame(x=numeric(0), y=numeric(0), alfa=numeric(0))
+points=data.frame(x1 = 0, y1 = 0, x2 = NA, y2 = NA, alfa=90, depth=1)
+
+
+# Generating data
+# Note: may take a minute or two
+
+for (action in actions)
+{
+  if (action=="F")
+  {
+    x=points[1, "x1"]+cos(points[1, "alfa"]*(pi/180))
+    y=points[1, "y1"]+sin(points[1, "alfa"]*(pi/180))
+    points[1,"x2"]=x
+    points[1,"y2"]=y
+    data.frame(x1 = x, y1 = y, x2 = NA, y2 = NA,
+               alfa=points[1, "alfa"],
+               depth=points[1,"depth"]) %>% rbind(points)->points
+  }
+  if (action %in% c("+", "-")){
+    alfa=points[1, "alfa"]
+    points[1, "alfa"]=eval(parse(text=paste0("alfa",action, angle)))
+  }
+  if(action=="["){
+    data.frame(x=points[1, "x1"], y=points[1, "y1"], alfa=points[1, "alfa"]) %>%
+      rbind(status) -> status
+    points[1, "depth"]=points[1, "depth"]+1
+  }
+
+  if(action=="]"){
+    depth=points[1, "depth"]
+    points[-1,]->points
+    data.frame(x1=status[1, "x"], y1=status[1, "y"], x2=NA, y2=NA,
+               alfa=status[1, "alfa"],
+               depth=depth-1) %>%
+      rbind(points) -> points
+    status[-1,]->status
+  }
+}
+
+ggplot() +
+  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2),
+               lineend = "round",
+               color = "#8B0000", # Dark Red color for the leaf
+               data = na.omit(points)) +
+  coord_fixed(ratio = 1) +
+  theme_void() # No grid nor axes
+
+```
+
+
+# Chart Critique
+![Outlook for Global Growth: World Bank](WB_prospects.png)
+
+## Critique
+
+1. Visual Design:
+
+    Color Choices: The use of colors helps differentiate the categories: blue for the world, red for advanced economies, and orange for EMDEs. However, the color palette could be more distinct. For example, red and orange are close on the spectrum and could be hard to distinguish for colorblind users.
+    Bar and Line Combination: The use of a bar chart for world growth alongside line charts for the other categories is appropriate but can be visually distracting. It may be better to use either all bars or all lines for consistency and easier comparison. The overlap between the bar and line chart, particularly from 2017 to 2019, makes the chart visually cluttered.
+
+2. Scale Issues:
+
+    Y-Axis: The Y-axis starts from 0, which is good for understanding the percentage growth. However, the axis does not clearly distinguish the increments; a larger range of grid lines could make it easier for viewers to gauge the growth more accurately.
+    Bars for World Growth: While the bars show global growth, the use of different colors for the lines could mislead users into thinking that the bars and lines represent separate categories, even though the lines are for specific regions. A clearer legend would help.
+
+3. Data Presentation:
+
+    The chart suggests that global growth (represented by the blue bars) is steady but slightly decreasing towards 2019, while advanced economies have seen a consistent downward trend, and EMDEs had a peak in growth between 2013-2015 followed by a plateau.
+    This chart is useful for understanding the growth disparity between advanced economies and emerging markets, though it could benefit from adding more contextual information, such as specific factors affecting these trends (e.g., global events, crises).
+    
+## Recommendations:
+
+    Legend Clarity: The chart would benefit from clearer labeling or a legend for the line graphs, especially the red and orange lines, which represent different groups.
+    Axis and Grid Improvement: Adding more grid lines or numbers on the Y-axis to show exact growth percentages would make the chart more readable.
+    Alternative Visualization: A stacked bar chart or a separate panel for each growth category might provide clearer comparisons between the categories without visual clutter.
+
+Overall, the chart communicates the intended message but could be improved by addressing these visual and data presentation issues.

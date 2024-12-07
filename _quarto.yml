@@ -8,6 +8,8 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - href: Assignment1.html
+        text: Assignment 1
 
 format:
   html:
