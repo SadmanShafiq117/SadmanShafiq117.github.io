@@ -1,0 +1,25 @@
+---
+title: "Assignment 6"
+layout: page
+---
+
+# Part 1
+
+```{=html}
+<iframe src="https://sadmanshafiq.shinyapps.io/FontChange/"
+        width="100%" height="600px" frameborder="0"></iframe>
+```
+
+# Part 2
+
+```{=html}
+<iframe src="https://sadmanshafiq.shinyapps.io/app1/"
+        width="100%" height="600px" frameborder="0"></iframe>
+```
+
+# Part 3
+```{=html}
+<iframe src="https://sadmanshafiq.shinyapps.io/app2/"
+        width="100%" height="600px" frameborder="0"></iframe>
+```
+

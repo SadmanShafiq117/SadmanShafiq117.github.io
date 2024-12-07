@@ -4,7 +4,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "For now, this site is just for assignmnets."
   },
   {
     "objectID": "Assignment1.html",
@@ -233,8 +233,29 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Sadman Shafiq",
+    "title": "Sadman Shafiq’s Website",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Hi, I am Sadman Shafiq, a PhD candidate in the PPPE program in UTD.\nFor now, I am using this website just for the Data Visualization course."
+  },
+  {
+    "objectID": "Assignment6.html",
+    "href": "Assignment6.html",
+    "title": "Assignment 6",
+    "section": "",
+    "text": "Part 1\n\n\n\nPart 2\n\n\n\nPart 3"
+  },
+  {
+    "objectID": "Assignment7.html",
+    "href": "Assignment7.html",
+    "title": "Assignment 7",
+    "section": "",
+    "text": "Scatter Plot and Bubble Chart with mtcars data"
+  },
+  {
+    "objectID": "Assignment8.html",
+    "href": "Assignment8.html",
+    "title": "Assignment 8",
+    "section": "",
+    "text": "Final Team Project"
   }
 ]

@@ -1,0 +1,11 @@
+---
+title: "Assignment 7"
+layout: page
+---
+
+# Scatter Plot and Bubble Chart with mtcars data
+
+```{=html}
+<iframe src="https://sadmanshafiq.shinyapps.io/app3/"
+        width="100%" height="600px" frameborder="0"></iframe>
+```
