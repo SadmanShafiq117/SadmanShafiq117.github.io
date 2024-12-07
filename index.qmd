@@ -1,9 +1,9 @@
 ---
-title: "Sadman Shafiq"
+title: "Sadman Shafiq's Website"
 ---
 
-This is a Quarto website.
+Hi, I am Sadman Shafiq, a PhD candidate in the PPPE program in UTD.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+For now, I am using this website just for the Data Visualization course. 
 
 

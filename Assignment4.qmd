@@ -1,0 +1,129 @@
+---
+title: "Assignment 4"
+layout: page
+---
+
+# Chart 1
+
+```{r, warning=FALSE}
+library(tidyverse)
+group <- iris %>% 
+  group_by(Species) %>% 
+  summarise(
+    sepal_mean = mean(Sepal.Length), 
+    petal_length_mean = mean(Petal.Length), 
+    petal_width_mean = mean(Petal.Width)
+  )
+
+ggplot(group, aes(x = Species, y = petal_length_mean, width = (petal_width_mean / 1.75))) +
+  geom_bar(stat = "identity", fill = "red", color = "black") + # Updated to red fill with black border
+  labs(y = "Petal Length", x = "Species") +
+  theme_minimal()
+
+
+```
+
+# Chart 2
+
+```{r, warning=FALSE}
+par(family = "Garamond", cex = 0.8)
+
+pairs_color <- c("steelblue", "lightgreen", "firebrick")
+
+pairs(
+  iris[1:4], 
+  pch = 2, 
+  col = pairs_color[iris$Species], 
+  main = "Scatterplot Matrix of Iris Dataset"
+)
+
+```
+
+# Chart 3
+
+```{r, warning=FALSE}
+group <- cars %>% group_by(speed) %>% summarise(distmean = mean(dist))
+ggplot(group, aes(x = speed, y = distmean)) +
+  geom_bar(stat = "identity", fill = "purple") +
+  coord_flip() +
+  labs(title = "Mean distance of cars by speed", y = "Mean distance", x = "Speed")
+
+```
+
+# Chart 4
+
+```{r, warning=FALSE}
+library(readxl)
+hpi <- read_excel("HPI_2024_public_dataset.xlsx", sheet = "All Data", skip = 1)
+colnames(hpi) <- gsub(" ", "_", colnames(hpi))
+colnames(hpi) <- tolower(colnames(hpi))
+attach(hpi)
+continent <- as.factor(continent)
+continent_names <- c("1" = "Latin America", "2" = "N America & Oceania", "3" = "Western Europe", "4" = "Middle East & N. Africa", "5" = "Sub-Saharan Africa", "6" = "South Asia", "7" = "Eastern Europe & Central Asia", "8" = "East Asia")
+hpi_2019 <- hpi %>% filter(year == "2019")
+hpi_2020 <- hpi %>% filter(year == "2020")
+hpi_2021 <- hpi %>% filter(year == "2021")
+median_2019 <- hpi_2019 %>% group_by(continent) %>% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))
+median_2020 <- hpi_2020 %>% group_by(continent) %>% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))
+median_2021 <- hpi_2021 %>% group_by(continent) %>% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))
+
+# Bind all median variables into one
+median_gdp <- bind_rows(
+  median_2019 %>% mutate (year = "2019"),
+  median_2020 %>% mutate (year = "2020"),
+  median_2021 %>% mutate (year = "2021")
+)
+# Recode x-axis
+median_gdp$continent_names <- recode(median_gdp$continent, !!!continent_names)
+
+# Plot
+ggplot(median_gdp, aes(x = continent_names, y = gdp, fill = year)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.5), width = 0.8) +
+  labs(title= "Median GDP by year", x = "Continent", y = "Median GDP per capita") +
+  scale_fill_manual(values = c("2019"= "purple", "2020" = "orange", "2021" = "cyan")) +
+  theme_minimal() +
+  theme(
+    text = element_text(family = "Garamond"),
+    plot.title = element_text(hjust = 0.5),
+    axis.title.y = element_text(margin = margin(r=10)),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+
+# Pre-Hackathon
+
+```{r, warning=FALSE}
+owidall <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/refs/heads/master/public/data/owid-covid-data.csv")
+owidall = owidall[!grepl("^OWID", owidall$iso_code), ]
+owideu = subset(owidall, continent == "Europe")
+attach(owideu)
+owideu$date2 <- as.Date(date)
+owidsub = subset(owideu, new_deaths < 6490)
+df_subset1 <- subset(owidsub, !is.na(new_deaths) & !is.na(date2)) 
+df_subset1b <- df_subset1 %>% filter(location != "Russia") 
+df_subset2 <- df_subset1b %>% filter(date2 <= as.Date("2023-12-31"))
+date_label <- c("2020-12-20", "2020-04-05", "2020-03-29", "2021-11-14", "2022-12-25", "2023-12-03")
+max_deaths_dates <- df_subset2 %>%
+  filter(date2 %in% date_label) %>%
+  group_by(date2) %>%
+  summarise(max_new_deaths = max(new_deaths, na.rm = TRUE)) %>%
+  ungroup()
+max_deaths_countries <- df_subset2 %>%
+  semi_join(max_deaths_dates, by = c("date2", "new_deaths" = "max_new_deaths")) %>%
+  select(date2, new_deaths, location)
+x <- df_subset2$date2
+y <- df_subset2$new_deaths
+par(family = "Georgia")
+plot(x, y, ylab = "COVID Deaths in Europe (Daily)", xlab = "Date", pch = 16, cex = 0.75, col = "#1f77b4", xaxt = "n") 
+text(max_deaths_countries$date2, max_deaths_countries$new_deaths, 
+     labels = max_deaths_countries$location, 
+     pos = 4, cex = 0.8, col = "#ff7f0e")
+axis(1, x, labels = format(x, "%Y-%m"), cex.axis = 0.7, las = 3, gap.axis = 1.5, tick = FALSE)
+
+
+```
+
+
+
+

@@ -1,0 +1,166 @@
+---
+title: "Assignment 3"
+layout: page
+---
+
+# Murrell01.R 
+
+```{r}
+# Scatterplot with modified elements
+
+x_vals <- c(1, 3, 6, 9, 11, 15) # New x-values for the plot
+y1_vals <- c(0.8, 1.2, 1.7, 2.8, 3.4, 4.5) # New y1 data
+y2_vals <- c(3.5, 1.0, 0.7, 0.5, 0.3, 0.2) # New y2 data
+
+
+plot.new()
+plot.window(range(x_vals), c(0, 5)) 
+lines(x_vals, y1_vals)
+lines(x_vals, y2_vals) 
+points(x_vals, y1_vals, pch=17, cex=2.5) 
+points(x_vals, y2_vals, pch=22, bg="lightblue", cex=2.5) 
+par(col="darkgray", fg="darkgray", col.axis="darkgray") 
+axis(1, at=seq(0, 16, 3)) 
+axis(2, at=seq(0, 5, 1)) 
+axis(4, at=seq(0, 5, 1)) 
+box(bty="l") 
+mtext("Time (seconds)", side=1, line=2, cex=0.8) # Label for x-axis
+mtext("Frequency per Travel", side=2, line=2, las=0, cex=0.8) # Label for y1-axis
+mtext("Frequency per Second", side=4, line=2, las=0, cex=0.8) # Label for y2-axis
+text(6, 4, "Bird 151", col="red") 
+
+
+```
+
+
+# Anscombe01.R
+
+```{r}
+data(anscombe)
+
+lm1 <- lm(y1 ~ x1, data=anscombe)
+lm2 <- lm(y2 ~ x2, data=anscombe)
+lm3 <- lm(y3 ~ x3, data=anscombe)
+lm4 <- lm(y4 ~ x4, data=anscombe)
+
+op <- par(mfrow = c(2, 2), mar = 0.1 + c(4, 4, 1, 1), oma = c(0, 0, 2, 0))
+
+ff <- y ~ x
+mods <- list(lm1, lm2, lm3, lm4)
+
+for (i in 1:4) {
+  ff[2:3] <- lapply(paste0(c("y", "x"), i), as.name)
+  plot(ff, data = anscombe, col = "darkgreen", pch = 19, bg = "lightgreen", cex = 1.5,
+       xlim = c(2, 20), ylim = c(2, 14))
+  abline(coef(mods[[i]]), col = "purple", lwd = 2)
+}
+
+mtext("Anscombe's 4 Regression Data Sets", outer = TRUE, cex = 1.5)
+
+# Reset plotting parameters
+par(op)
+```
+
+## Analysis of Anscombe's Data Sets
+
+The four regression plots illustrate the relationship between xx and yy. Despite having identical slopes and coefficients, the true functional relationships vary significantly across the datasets.
+
+Each plot includes a best-fit line that minimizes the squared distance between the data points and the regression line. However, some relationships are better captured by a quadratic function rather than the conventional linear model.
+
+The plots also demonstrate the impact of outlier points. In one dataset, an outlier substantially skews the apparent relationship, emphasizing the need to account for such anomalies in regression analysis.
+
+In another dataset, the xx variable (or yy) exhibits minimal variation, yet a linear relationship still emerges due to the alignment of the remaining points.
+
+# Alternative ways to plot
+
+```{r}
+data(anscombe)
+
+lm1 <- lm(y1 ~ x1, data = anscombe)
+lm2 <- lm(y2 ~ x2, data = anscombe)
+lm3 <- lm(y3 ~ x3, data = anscombe)
+lm4 <- lm(y4 ~ x4, data = anscombe)
+
+mods <- list(lm1, lm2, lm3, lm4)
+
+op <- par(mfrow = c(2, 2), mar = 0.1 + c(4, 4, 1, 1), oma = c(0, 0, 2, 0))
+
+for (i in 1:4) {
+  plot(anscombe[[paste0("x", i)]], anscombe[[paste0("y", i)]], 
+       col = "blue", pch = 1, bg = "gray30", cex = 1.2,
+       xlim = c(3, 19), ylim = c(3, 13),
+       xlab = "x", ylab = "y", main = paste("Dataset", i))
+  abline(mods[[i]], col = "red")
+}
+
+mtext("Anscombe's 4 Regression Data Sets", outer = TRUE, cex = 1.5)
+par(op)
+```
+
+
+# Fine Tuning
+
+## R basic packages
+```{r}
+x <- c(0.5, 2, 4, 8, 12, 16)
+y1 <- c(1, 1.3, 1.9, 3.4, 3.9, 4.8)
+y2 <- c(4, .8, .5, .45, .4, .3)
+
+plot.new()
+plot.window(range(x), c(0, 6))
+
+col_y1 <- "darkblue"
+col_y2 <- "darkgreen"
+
+lines(x, y1, col = col_y1, lwd = 2)
+lines(x, y2, col = col_y2, lwd = 2)
+
+points(x, y1, pch = 17, col = col_y1, cex = 2)
+points(x, y2, pch = 15, col = col_y2, cex = 2)
+
+par(col = "gray50", fg = "gray50", col.axis = "gray50", family = "serif")
+
+axis(1, at = seq(0, 16, 4))
+axis(2, at = seq(0, 6, 2))
+axis(4, at = seq(0, 6, 2))
+box(bty = "u")
+
+mtext("Travel Time (s)", side = 1, line = 2, cex = 0.8)
+mtext("Responses per Travel", side = 2, line = 2, las = 0, cex = 0.8)
+mtext("Responses per Second", side = 4, line = 2, las = 0, cex = 0.8)
+
+text(4, 5, "Bird 131", col = "black", family = "serif")
+
+
+```
+## with tidyverse 
+
+```{r}
+library(tidyverse)
+
+# Data points for x, y1, y2
+data <- tibble(
+  x = c(0.5, 2, 4, 8, 12, 16),
+  y1 = c(1, 1.3, 1.9, 3.4, 3.9, 4.8),
+  y2 = c(4, 0.8, 0.5, 0.45, 0.4, 0.3)
+)
+
+# Plot with ggplot2
+ggplot(data) +
+  geom_line(aes(x = x, y = y1), color = "darkblue", size = 1.2) +
+  geom_line(aes(x = x, y = y2), color = "darkgreen", size = 1.2) +
+  geom_point(aes(x = x, y = y1), shape = 17, color = "darkblue", size = 4) +
+  geom_point(aes(x = x, y = y2), shape = 15, color = "darkgreen", size = 4) +
+  labs(x = "Travel Time (s)", y = "Responses per Travel") +
+  annotate("text", x = 4, y = 5, label = "Bird 131", family = "serif", size = 5) +
+  theme_minimal(base_family = "serif") +
+  theme(
+    axis.title = element_text(size = 12, color = "gray50"),
+    axis.text = element_text(color = "gray50"),
+    axis.line = element_line(color = "gray50"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(color = "gray80")
+  )
+
+```
+

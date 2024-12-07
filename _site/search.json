@@ -25,7 +25,210 @@
     "href": "Assignment1.html#recommendations",
     "title": "Assignment1",
     "section": "Recommendations:",
-    "text": "Recommendations:\nLegend Clarity: The chart would benefit from clearer labeling or a legend for the line graphs, especially the red and orange lines, which represent different groups.\nAxis and Grid Improvement: Adding more grid lines or numbers on the Y-axis to show exact growth percentages would make the chart more readable.\nAlternative Visualization: A stacked bar chart or a separate panel for each growth category might provide clearer comparisons between the categories without visual clutter.\nOverall, the chart communicates the intended message but could be improved by addressing these visual and data presentation issues."
+    "text": "Recommendations:\nLegend Clarity: The chart would benefit from clearer labeling or a legend for the line graphs, especially the red and orange lines, which represent different groups.\n\nAxis and Grid Improvement: Adding more grid lines or numbers on the Y-axis to show exact growth percentages would make the chart more readable.\n\nAlternative Visualization: A stacked bar chart or a separate panel for each growth category might provide clearer comparisons between the categories without visual clutter.\nOverall, the chart communicates the intended message but could be improved by addressing these visual and data presentation issues."
+  },
+  {
+    "objectID": "Assignment2.html",
+    "href": "Assignment2.html",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Change pch change the shape of the data points.\n\nplot(pressure, pch=16)\ntext(150, 600, \n     \"Pressure (mm Hg)\\nversus\\nTemperature (Celsius)\")\n\n\n\npar(mfrow=c(3, 2))\nnew_x &lt;- c(0.5, 2, 4, 8, 12, 16)\nnew_y1 &lt;- c(1, 1.3, 1.9, 3.4, 3.9, 4.8)\nnew_y2 &lt;- c(4, .8, .5, .45, .4, .3)\n\n\n\nChange cex change size of the points, bg, color of the points, fg, color of the axis\n\npar(las=1, mar=c(4, 4, 2, 4), cex=0.8) \nplot.new()\nplot.window(range(new_x), c(0, 6))\nlines(new_x, new_y1)\nlines(new_x, new_y2)\npoints(new_x, new_y1, pch=17, cex=6)  # Increased point size with a different shape\npoints(new_x, new_y2, pch=19, bg=\"green\", cex=3)  # Different background color and size\npar(col=\"purple\", fg=\"gray40\", col.axis=\"darkgreen\")\naxis(1, at=seq(0, 16, 4)) # X-axis, min, max, gap\naxis(2, at=seq(0, 6, 2))\naxis(4, at=seq(0, 6, 2))\nbox(bty=\"o\")  # Changed box type\nmtext(\"Time (s)\", side=1, line=2, cex=1)\nmtext(\"Frequency\", side=2, line=2, las=0, cex=1)\nmtext(\"Velocity\", side=4, line=2, las=0, cex=1)\ntext(6, 4, \"Sample Label\")\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1), col=\"black\", fg=\"black\", col.axis=\"black\")\n\n\n\n\n\nZ &lt;- rnorm(50)\n# Ensure no Z exceeds [-4, 4]\nZ[Z &lt; -4 | Z &gt; 4] &lt;- NA # Selection/set range\nx_vals &lt;- seq(-4, 4, .1) \ndensity_vals &lt;- dnorm(x_vals)\npar(mar=c(4.5, 4.1, 3.1, 0))\nhist(Z, breaks=seq(-4, 4), ylim=c(0, 0.5), \n     col=\"cyan\", freq=FALSE)\nlines(x_vals, dnorm(x_vals), lwd=2)\n\n\n\n\n\n\n\n\npar(mar=c(2, 3.1, 2, 2.1)) Margin of the plot: Bottom, Left, Top, Right\ncol=gray(0.1 + seq(1, 9, 2)/11) Shade of grey from 1/11, 3/11, 5/11, 7/11, 9/11\nnames=rep(““, 4)) –&gt; Change x-axis to be empty –&gt; Use mtext to create customized label\ntext(rep(midpts, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2 midpts, each=5 # Position of each text from the bars\n\ntext(rep(midpts, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2 –&gt; Calculate the culmulative sums of death\n\npar(mar=c(2, 3.1, 2, 2.1))\nmid_points &lt;- barplot(VADeaths, \n                     col=gray(0.1 + seq(1, 9, 2)/11), \n                     names=rep(\"\", 4))\nmtext(sub(\" \", \"\\n\", colnames(VADeaths)),\n      at=mid_points, side=1, line=0.5, cex=0.5)\ntext(rep(mid_points, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2,\n     VADeaths, \n     col=rep(c(\"white\", \"black\"), times=3:2), \n     cex=0.8)\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1))\n\n\n\n\nBoxwex = Boxwidth at= Change position Subset = Subset of data\nboxwex = 0.25, at = 1:3 - 0.2, subset= supp == “VC”, col=“white”, xlab=““, ylab=”tooth length”, ylim=c(0,35))\n\npar(mar=c(3, 4.1, 2, 0))\nboxplot(len ~ dose, data = ToothGrowth,\n        boxwex = 0.3, at = 1:3 - 0.25,\n        subset = supp == \"VC\", col = \"lightblue\",\n        xlab = \"\",\n        ylab = \"Tooth Length\", ylim = c(0, 35))\nmtext(\"Vitamin C Dose (mg)\", side = 1, line = 2.5, cex = 0.8)\nboxplot(len ~ dose, data = ToothGrowth, add = TRUE,\n        boxwex = 0.3, at = 1:3 + 0.25,\n        subset = supp == \"OJ\", col = \"lightgreen\")\nlegend(1.5, 9, c(\"Ascorbic Acid\", \"Orange Juice\"), \n       fill = c(\"lightblue\", \"lightgreen\"), \n       bty = \"n\")\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1))\n\n\n\n\n1.z &lt;- outer(x, y, f) Compute the value of function of x,y and store the value as z And adjusted all missing value of z -1\n2.f &lt;- function(x,y) { r &lt;- sqrt(x2+y2); 10 * sin(r)/r } First derived the distance between x and y by r Then calculate a function of x y by the fraction 10 * sin(r)/r\n\npersp(x, y, z, theta = 30, phi = 30, expand = 0.5) Theta = rotated angle of z plane Phi = rotated angle of xy plane Expand = Shrink/ Enlarge the width of the image\n\n\nx_vals &lt;- seq(-12, 12, length = 30)\ny_vals &lt;- x_vals\nf &lt;- function(x, y) { r &lt;- sqrt(x^2 + y^2); 12 * sin(r) / r }\nz_vals &lt;- outer(x_vals, y_vals, f)\nz_vals[is.na(z_vals)] &lt;- 1\n# Adjusting for z-axis label visibility\npar(mar = c(0, 0.5, 0, 0), lwd = 0.5)\npersp(x_vals, y_vals, z_vals, theta = 35, phi = 25, \n      expand = 0.5)\n\n\n\n\n\n\n\nCan use other type of color pie(pie.sales, col = rainbow(6)) pie(pie.sales, col = heat.colors(6))\n\npar(mar=c(0, 2, 1, 2), xpd=FALSE, cex=0.6)\npie_sales &lt;- c(0.15, 0.25, 0.2, 0.18, 0.05, 0.17)\nnames(pie_sales) &lt;- c(\"Strawberry\", \"Lemon\", \"Apple\", \"Chocolate\", \"Other\", \"Vanilla\")\npie(pie_sales, col = gray(seq(0.2, 1.0, length=6)))"
+  },
+  {
+    "objectID": "Assignment2.html#including-plots",
+    "href": "Assignment2.html#including-plots",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Change cex change size of the points, bg, color of the points, fg, color of the axis\n\npar(las=1, mar=c(4, 4, 2, 4), cex=0.8) \nplot.new()\nplot.window(range(new_x), c(0, 6))\nlines(new_x, new_y1)\nlines(new_x, new_y2)\npoints(new_x, new_y1, pch=17, cex=6)  # Increased point size with a different shape\npoints(new_x, new_y2, pch=19, bg=\"green\", cex=3)  # Different background color and size\npar(col=\"purple\", fg=\"gray40\", col.axis=\"darkgreen\")\naxis(1, at=seq(0, 16, 4)) # X-axis, min, max, gap\naxis(2, at=seq(0, 6, 2))\naxis(4, at=seq(0, 6, 2))\nbox(bty=\"o\")  # Changed box type\nmtext(\"Time (s)\", side=1, line=2, cex=1)\nmtext(\"Frequency\", side=2, line=2, las=0, cex=1)\nmtext(\"Velocity\", side=4, line=2, las=0, cex=1)\ntext(6, 4, \"Sample Label\")\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1), col=\"black\", fg=\"black\", col.axis=\"black\")"
+  },
+  {
+    "objectID": "Assignment2.html#histogram",
+    "href": "Assignment2.html#histogram",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Z &lt;- rnorm(50)\n# Ensure no Z exceeds [-4, 4]\nZ[Z &lt; -4 | Z &gt; 4] &lt;- NA # Selection/set range\nx_vals &lt;- seq(-4, 4, .1) \ndensity_vals &lt;- dnorm(x_vals)\npar(mar=c(4.5, 4.1, 3.1, 0))\nhist(Z, breaks=seq(-4, 4), ylim=c(0, 0.5), \n     col=\"cyan\", freq=FALSE)\nlines(x_vals, dnorm(x_vals), lwd=2)"
+  },
+  {
+    "objectID": "Assignment2.html#barplot",
+    "href": "Assignment2.html#barplot",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "par(mar=c(2, 3.1, 2, 2.1)) Margin of the plot: Bottom, Left, Top, Right\ncol=gray(0.1 + seq(1, 9, 2)/11) Shade of grey from 1/11, 3/11, 5/11, 7/11, 9/11\nnames=rep(““, 4)) –&gt; Change x-axis to be empty –&gt; Use mtext to create customized label\ntext(rep(midpts, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2 midpts, each=5 # Position of each text from the bars\n\ntext(rep(midpts, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2 –&gt; Calculate the culmulative sums of death\n\npar(mar=c(2, 3.1, 2, 2.1))\nmid_points &lt;- barplot(VADeaths, \n                     col=gray(0.1 + seq(1, 9, 2)/11), \n                     names=rep(\"\", 4))\nmtext(sub(\" \", \"\\n\", colnames(VADeaths)),\n      at=mid_points, side=1, line=0.5, cex=0.5)\ntext(rep(mid_points, each=5), apply(VADeaths, 2, cumsum) - VADeaths/2,\n     VADeaths, \n     col=rep(c(\"white\", \"black\"), times=3:2), \n     cex=0.8)\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1))"
+  },
+  {
+    "objectID": "Assignment2.html#boxplot",
+    "href": "Assignment2.html#boxplot",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Boxwex = Boxwidth at= Change position Subset = Subset of data\nboxwex = 0.25, at = 1:3 - 0.2, subset= supp == “VC”, col=“white”, xlab=““, ylab=”tooth length”, ylim=c(0,35))\n\npar(mar=c(3, 4.1, 2, 0))\nboxplot(len ~ dose, data = ToothGrowth,\n        boxwex = 0.3, at = 1:3 - 0.25,\n        subset = supp == \"VC\", col = \"lightblue\",\n        xlab = \"\",\n        ylab = \"Tooth Length\", ylim = c(0, 35))\nmtext(\"Vitamin C Dose (mg)\", side = 1, line = 2.5, cex = 0.8)\nboxplot(len ~ dose, data = ToothGrowth, add = TRUE,\n        boxwex = 0.3, at = 1:3 + 0.25,\n        subset = supp == \"OJ\", col = \"lightgreen\")\nlegend(1.5, 9, c(\"Ascorbic Acid\", \"Orange Juice\"), \n       fill = c(\"lightblue\", \"lightgreen\"), \n       bty = \"n\")\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1))"
+  },
+  {
+    "objectID": "Assignment2.html#perspective",
+    "href": "Assignment2.html#perspective",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "1.z &lt;- outer(x, y, f) Compute the value of function of x,y and store the value as z And adjusted all missing value of z -1\n2.f &lt;- function(x,y) { r &lt;- sqrt(x2+y2); 10 * sin(r)/r } First derived the distance between x and y by r Then calculate a function of x y by the fraction 10 * sin(r)/r\n\npersp(x, y, z, theta = 30, phi = 30, expand = 0.5) Theta = rotated angle of z plane Phi = rotated angle of xy plane Expand = Shrink/ Enlarge the width of the image\n\n\nx_vals &lt;- seq(-12, 12, length = 30)\ny_vals &lt;- x_vals\nf &lt;- function(x, y) { r &lt;- sqrt(x^2 + y^2); 12 * sin(r) / r }\nz_vals &lt;- outer(x_vals, y_vals, f)\nz_vals[is.na(z_vals)] &lt;- 1\n# Adjusting for z-axis label visibility\npar(mar = c(0, 0.5, 0, 0), lwd = 0.5)\npersp(x_vals, y_vals, z_vals, theta = 35, phi = 25, \n      expand = 0.5)"
+  },
+  {
+    "objectID": "Assignment2.html#pie-chart",
+    "href": "Assignment2.html#pie-chart",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Can use other type of color pie(pie.sales, col = rainbow(6)) pie(pie.sales, col = heat.colors(6))\n\npar(mar=c(0, 2, 1, 2), xpd=FALSE, cex=0.6)\npie_sales &lt;- c(0.15, 0.25, 0.2, 0.18, 0.05, 0.17)\nnames(pie_sales) &lt;- c(\"Strawberry\", \"Lemon\", \"Apple\", \"Chocolate\", \"Other\", \"Vanilla\")\npie(pie_sales, col = gray(seq(0.2, 1.0, length=6)))"
+  },
+  {
+    "objectID": "Assignment2.html#histogram-1",
+    "href": "Assignment2.html#histogram-1",
+    "title": "Assignment 2",
+    "section": "Histogram",
+    "text": "Histogram\n\nhpi_data_2021 &lt;- hpi_data %&gt;% filter(year == \"2021\", !is.na(lifeexp))\nattach(hpi_data_2021)\n\nThe following objects are masked from hpi_data_subset:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following object is masked from package:tidyr:\n\n    population\n\nmean &lt;- mean(lifeexp)\nsd &lt;- sd(lifeexp)\nx &lt;- seq(min(lifeexp), max(lifeexp), .1)\ndn &lt;- dnorm(x, mean = mean, sd = sd) # Because data is not normally distributed, what need to input the mean and sd to get the line\nhist(lifeexp, breaks=seq(50, 90), ylim=c(0, 0.08), \n     col=\"steelblue\", freq=FALSE, main = \"Life Expectancy in 2021\", xlab=\"Life Expectancy\")\nlines(x, dn, lwd=2)\n\n\n\npar(mar=c(5.1, 4.1, 4.1, 2.1))"
+  },
+  {
+    "objectID": "Assignment2.html#boxplot-1",
+    "href": "Assignment2.html#boxplot-1",
+    "title": "Assignment 2",
+    "section": "Boxplot",
+    "text": "Boxplot\n\ncontinent_names2 &lt;- c(\"Latin\\nAmerica\", \"N America\\n& Oceania\", \"Western\\nEurope\", \"MiddleEast\\n& N. Africa\", \"Sub-Saharan\\nAfrica\", \"South\\nAsia\", \"Eastern Europe\\n& Central Asia\", \"East\\nAsia\")\n\npar(mar = c(5, 5, 4, 2))\nboxplot(lifeexp ~ continent, data = hpi_data_2021,\n        col = hcl.colors(length(unique(hpi_data_2021$continent)), palette = \"Set3\"), # See hcl.colors for more option\n        xaxt = \"n\",\n        xlab = \"Continent\",\n        ylab = \"Life Expectancy\",\n        main = \"Distribution of Life Expectancy by Continent\")\naxis(1, at = 1:8, labels = continent_names2, cex.axis=0.6)"
+  },
+  {
+    "objectID": "Assignment2.html#pie-chart-1",
+    "href": "Assignment2.html#pie-chart-1",
+    "title": "Assignment 2",
+    "section": "Pie Chart",
+    "text": "Pie Chart\n\nattach(hpi_data_2021)\n\nThe following objects are masked from hpi_data_2021 (pos = 3):\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data_subset:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following object is masked from package:tidyr:\n\n    population\n\ngdp_mean &lt;- mean(gdp_per_capita, na.rm=TRUE)\nhpi_data_2021_above &lt;- hpi_data_2021 %&gt;%  filter(gdp_per_capita &gt; gdp_mean)%&gt;% group_by(continent) %&gt;% summarise(country_count = n())\nhpi_data_2021_above\n\n# A tibble: 6 × 2\n  continent country_count\n      &lt;dbl&gt;         &lt;int&gt;\n1         1             4\n2         2             4\n3         3            20\n4         4             7\n5         7            13\n6         8             5\n\nhpi_data_2021_above$continent &lt;- as.factor(hpi_data_2021_above$continent)\nhpi_data_2021_above$continent_names &lt;- c(\"1\" = \"Latin America\", \"2\" = \"N America & Oceania\", \"3\" = \"Western Europe\", \"4\" = \"Middle East & N. Africa\", \"7\" = \"Eastern Europe & Central Asia\", \"8\" = \"East Asia\")\nhpi_data_2021_above$percentage &lt;- round((hpi_data_2021_above$country_count / sum(hpi_data_2021_above$country_count)) * 100, 1)\nlabels &lt;- paste(hpi_data_2021_above$continent_names, \" (\", hpi_data_2021_above$percentage, \"%)\", sep = \"\")\npar(mar = c(2, 2, 2, 2)) # Adjust margin to increase pie size\npie(hpi_data_2021_above$country_count, labels = labels, col = hcl.colors(n = nrow(hpi_data_2021_above), palette = \"Set3\"), \n    main = \"Distribution of Countries by Continent\\nwith Above-Average GDP per Capita in 2021\")"
+  },
+  {
+    "objectID": "Assignment2.html#d-perspective-plot",
+    "href": "Assignment2.html#d-perspective-plot",
+    "title": "Assignment 2",
+    "section": "3D Perspective Plot",
+    "text": "3D Perspective Plot\n\nattach(hpi_data_2021)\n\nThe following objects are masked from hpi_data_2021 (pos = 3):\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data_2021 (pos = 4):\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data_subset:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following objects are masked from hpi_data:\n\n    ...15, ...22, ...23, ...24, ...25, adj_lad_x_life_exp,\n    change_in_gdp_(2016-2019), change_in_gdp_(2016-2020),\n    co2_threshold_for_year, continent, country, cov_adj_footprint,\n    cov_adjusted_ladder, extra_hply_(above_min), footprint_category,\n    gdp_per_capita, hpi, hpi_rank, hply/ef, iso, ladder, lifeexp,\n    national_carbon_footprint_(tco2e), population, year\n\n\nThe following object is masked from package:tidyr:\n\n    population\n\nx &lt;- sort(unique(na.omit(lifeexp))) # Need to sort x and y so that they are in increasing order, and must be unique to generate f (the distance between x and y)\ny &lt;- sort(unique(na.omit(cov_adj_footprint)))\nf &lt;- function(x,y) { r &lt;- sqrt(x^2+y^2); 10 * sin(r)/r }\nz &lt;- outer(x, y, f)\nz[is.na(z)] &lt;- 1\nz &lt;- outer(x, y, function(x, y) sin(sqrt(x^2 + y^2)))\npar(mar=c(0, 0.5, 0, 0), lwd=0.5)\npersp(x, y, z, theta = 50, phi = 30, \n      expand = 0.5)"
+  },
+  {
+    "objectID": "Assignment3.html",
+    "href": "Assignment3.html",
+    "title": "Assignment 3",
+    "section": "",
+    "text": "# Scatterplot with modified elements\n\nx_vals &lt;- c(1, 3, 6, 9, 11, 15) # New x-values for the plot\ny1_vals &lt;- c(0.8, 1.2, 1.7, 2.8, 3.4, 4.5) # New y1 data\ny2_vals &lt;- c(3.5, 1.0, 0.7, 0.5, 0.3, 0.2) # New y2 data\n\n\nplot.new()\nplot.window(range(x_vals), c(0, 5)) \nlines(x_vals, y1_vals)\nlines(x_vals, y2_vals) \npoints(x_vals, y1_vals, pch=17, cex=2.5) \npoints(x_vals, y2_vals, pch=22, bg=\"lightblue\", cex=2.5) \npar(col=\"darkgray\", fg=\"darkgray\", col.axis=\"darkgray\") \naxis(1, at=seq(0, 16, 3)) \naxis(2, at=seq(0, 5, 1)) \naxis(4, at=seq(0, 5, 1)) \nbox(bty=\"l\") \nmtext(\"Time (seconds)\", side=1, line=2, cex=0.8) # Label for x-axis\nmtext(\"Frequency per Travel\", side=2, line=2, las=0, cex=0.8) # Label for y1-axis\nmtext(\"Frequency per Second\", side=4, line=2, las=0, cex=0.8) # Label for y2-axis\ntext(6, 4, \"Bird 151\", col=\"red\")"
+  },
+  {
+    "objectID": "Assignment3.html#analysis-of-anscombes-data-sets",
+    "href": "Assignment3.html#analysis-of-anscombes-data-sets",
+    "title": "Assignment 3",
+    "section": "Analysis of Anscombe’s Data Sets",
+    "text": "Analysis of Anscombe’s Data Sets\nThe four regression plots illustrate the relationship between xx and yy. Despite having identical slopes and coefficients, the true functional relationships vary significantly across the datasets.\nEach plot includes a best-fit line that minimizes the squared distance between the data points and the regression line. However, some relationships are better captured by a quadratic function rather than the conventional linear model.\nThe plots also demonstrate the impact of outlier points. In one dataset, an outlier substantially skews the apparent relationship, emphasizing the need to account for such anomalies in regression analysis.\nIn another dataset, the xx variable (or yy) exhibits minimal variation, yet a linear relationship still emerges due to the alignment of the remaining points."
+  },
+  {
+    "objectID": "Assignment3.html#r-basic-packages",
+    "href": "Assignment3.html#r-basic-packages",
+    "title": "Assignment 3",
+    "section": "R basic packages",
+    "text": "R basic packages\n\nx &lt;- c(0.5, 2, 4, 8, 12, 16)\ny1 &lt;- c(1, 1.3, 1.9, 3.4, 3.9, 4.8)\ny2 &lt;- c(4, .8, .5, .45, .4, .3)\n\nplot.new()\nplot.window(range(x), c(0, 6))\n\ncol_y1 &lt;- \"darkblue\"\ncol_y2 &lt;- \"darkgreen\"\n\nlines(x, y1, col = col_y1, lwd = 2)\nlines(x, y2, col = col_y2, lwd = 2)\n\npoints(x, y1, pch = 17, col = col_y1, cex = 2)\npoints(x, y2, pch = 15, col = col_y2, cex = 2)\n\npar(col = \"gray50\", fg = \"gray50\", col.axis = \"gray50\", family = \"serif\")\n\naxis(1, at = seq(0, 16, 4))\naxis(2, at = seq(0, 6, 2))\naxis(4, at = seq(0, 6, 2))\nbox(bty = \"u\")\n\nmtext(\"Travel Time (s)\", side = 1, line = 2, cex = 0.8)\nmtext(\"Responses per Travel\", side = 2, line = 2, las = 0, cex = 0.8)\nmtext(\"Responses per Second\", side = 4, line = 2, las = 0, cex = 0.8)\n\ntext(4, 5, \"Bird 131\", col = \"black\", family = \"serif\")"
+  },
+  {
+    "objectID": "Assignment3.html#with-tidyverse",
+    "href": "Assignment3.html#with-tidyverse",
+    "title": "Assignment 3",
+    "section": "with tidyverse",
+    "text": "with tidyverse\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n# Data points for x, y1, y2\ndata &lt;- tibble(\n  x = c(0.5, 2, 4, 8, 12, 16),\n  y1 = c(1, 1.3, 1.9, 3.4, 3.9, 4.8),\n  y2 = c(4, 0.8, 0.5, 0.45, 0.4, 0.3)\n)\n\n# Plot with ggplot2\nggplot(data) +\n  geom_line(aes(x = x, y = y1), color = \"darkblue\", size = 1.2) +\n  geom_line(aes(x = x, y = y2), color = \"darkgreen\", size = 1.2) +\n  geom_point(aes(x = x, y = y1), shape = 17, color = \"darkblue\", size = 4) +\n  geom_point(aes(x = x, y = y2), shape = 15, color = \"darkgreen\", size = 4) +\n  labs(x = \"Travel Time (s)\", y = \"Responses per Travel\") +\n  annotate(\"text\", x = 4, y = 5, label = \"Bird 131\", family = \"serif\", size = 5) +\n  theme_minimal(base_family = \"serif\") +\n  theme(\n    axis.title = element_text(size = 12, color = \"gray50\"),\n    axis.text = element_text(color = \"gray50\"),\n    axis.line = element_line(color = \"gray50\"),\n    panel.grid.minor = element_blank(),\n    panel.grid.major = element_line(color = \"gray80\")\n  )\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+  },
+  {
+    "objectID": "Assignment4.html",
+    "href": "Assignment4.html",
+    "title": "Assignment 4",
+    "section": "",
+    "text": "Chart 1\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ngroup &lt;- iris %&gt;% \n  group_by(Species) %&gt;% \n  summarise(\n    sepal_mean = mean(Sepal.Length), \n    petal_length_mean = mean(Petal.Length), \n    petal_width_mean = mean(Petal.Width)\n  )\n\nggplot(group, aes(x = Species, y = petal_length_mean, width = (petal_width_mean / 1.75))) +\n  geom_bar(stat = \"identity\", fill = \"red\", color = \"black\") + # Updated to red fill with black border\n  labs(y = \"Petal Length\", x = \"Species\") +\n  theme_minimal()\n\n\n\n\n\n\nChart 2\n\npar(family = \"Garamond\", cex = 0.8)\n\npairs_color &lt;- c(\"steelblue\", \"lightgreen\", \"firebrick\")\n\npairs(\n  iris[1:4], \n  pch = 2, \n  col = pairs_color[iris$Species], \n  main = \"Scatterplot Matrix of Iris Dataset\"\n)\n\n\n\n\n\n\nChart 3\n\ngroup &lt;- cars %&gt;% group_by(speed) %&gt;% summarise(distmean = mean(dist))\nggplot(group, aes(x = speed, y = distmean)) +\n  geom_bar(stat = \"identity\", fill = \"purple\") +\n  coord_flip() +\n  labs(title = \"Mean distance of cars by speed\", y = \"Mean distance\", x = \"Speed\")\n\n\n\n\n\n\nChart 4\n\nlibrary(readxl)\nhpi &lt;- read_excel(\"HPI_2024_public_dataset.xlsx\", sheet = \"All Data\", skip = 1)\n\nNew names:\n• `` -&gt; `...15`\n• `` -&gt; `...22`\n• `` -&gt; `...23`\n• `` -&gt; `...24`\n• `` -&gt; `...25`\n\ncolnames(hpi) &lt;- gsub(\" \", \"_\", colnames(hpi))\ncolnames(hpi) &lt;- tolower(colnames(hpi))\nattach(hpi)\n\nThe following object is masked _by_ .GlobalEnv:\n\n    hpi\n\nThe following object is masked from package:tidyr:\n\n    population\n\ncontinent &lt;- as.factor(continent)\ncontinent_names &lt;- c(\"1\" = \"Latin America\", \"2\" = \"N America & Oceania\", \"3\" = \"Western Europe\", \"4\" = \"Middle East & N. Africa\", \"5\" = \"Sub-Saharan Africa\", \"6\" = \"South Asia\", \"7\" = \"Eastern Europe & Central Asia\", \"8\" = \"East Asia\")\nhpi_2019 &lt;- hpi %&gt;% filter(year == \"2019\")\nhpi_2020 &lt;- hpi %&gt;% filter(year == \"2020\")\nhpi_2021 &lt;- hpi %&gt;% filter(year == \"2021\")\nmedian_2019 &lt;- hpi_2019 %&gt;% group_by(continent) %&gt;% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))\nmedian_2020 &lt;- hpi_2020 %&gt;% group_by(continent) %&gt;% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))\nmedian_2021 &lt;- hpi_2021 %&gt;% group_by(continent) %&gt;% summarize(gdp = median(gdp_per_capita, na.rm = TRUE))\n\n# Bind all median variables into one\nmedian_gdp &lt;- bind_rows(\n  median_2019 %&gt;% mutate (year = \"2019\"),\n  median_2020 %&gt;% mutate (year = \"2020\"),\n  median_2021 %&gt;% mutate (year = \"2021\")\n)\n# Recode x-axis\nmedian_gdp$continent_names &lt;- recode(median_gdp$continent, !!!continent_names)\n\n# Plot\nggplot(median_gdp, aes(x = continent_names, y = gdp, fill = year)) +\n  geom_bar(stat = \"identity\", position = position_dodge(width = 0.5), width = 0.8) +\n  labs(title= \"Median GDP by year\", x = \"Continent\", y = \"Median GDP per capita\") +\n  scale_fill_manual(values = c(\"2019\"= \"purple\", \"2020\" = \"orange\", \"2021\" = \"cyan\")) +\n  theme_minimal() +\n  theme(\n    text = element_text(family = \"Garamond\"),\n    plot.title = element_text(hjust = 0.5),\n    axis.title.y = element_text(margin = margin(r=10)),\n    axis.text.x = element_text(angle = 45, hjust = 1)\n  )\n\n\n\n\n\n\nPre-Hackathon\n\nowidall &lt;- read.csv(\"https://raw.githubusercontent.com/owid/covid-19-data/refs/heads/master/public/data/owid-covid-data.csv\")\nowidall = owidall[!grepl(\"^OWID\", owidall$iso_code), ]\nowideu = subset(owidall, continent == \"Europe\")\nattach(owideu)\n\nThe following object is masked _by_ .GlobalEnv:\n\n    continent\n\n\nThe following objects are masked from hpi:\n\n    continent, gdp_per_capita, population\n\n\nThe following object is masked from package:tidyr:\n\n    population\n\nowideu$date2 &lt;- as.Date(date)\nowidsub = subset(owideu, new_deaths &lt; 6490)\ndf_subset1 &lt;- subset(owidsub, !is.na(new_deaths) & !is.na(date2)) \ndf_subset1b &lt;- df_subset1 %&gt;% filter(location != \"Russia\") \ndf_subset2 &lt;- df_subset1b %&gt;% filter(date2 &lt;= as.Date(\"2023-12-31\"))\ndate_label &lt;- c(\"2020-12-20\", \"2020-04-05\", \"2020-03-29\", \"2021-11-14\", \"2022-12-25\", \"2023-12-03\")\nmax_deaths_dates &lt;- df_subset2 %&gt;%\n  filter(date2 %in% date_label) %&gt;%\n  group_by(date2) %&gt;%\n  summarise(max_new_deaths = max(new_deaths, na.rm = TRUE)) %&gt;%\n  ungroup()\nmax_deaths_countries &lt;- df_subset2 %&gt;%\n  semi_join(max_deaths_dates, by = c(\"date2\", \"new_deaths\" = \"max_new_deaths\")) %&gt;%\n  select(date2, new_deaths, location)\nx &lt;- df_subset2$date2\ny &lt;- df_subset2$new_deaths\npar(family = \"Georgia\")\nplot(x, y, ylab = \"COVID Deaths in Europe (Daily)\", xlab = \"Date\", pch = 16, cex = 0.75, col = \"#1f77b4\", xaxt = \"n\") \ntext(max_deaths_countries$date2, max_deaths_countries$new_deaths, \n     labels = max_deaths_countries$location, \n     pos = 4, cex = 0.8, col = \"#ff7f0e\")\naxis(1, x, labels = format(x, \"%Y-%m\"), cex.axis = 0.7, las = 3, gap.axis = 1.5, tick = FALSE)"
+  },
+  {
+    "objectID": "Assignment5.html",
+    "href": "Assignment5.html",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "data(\"cars\")\n\n# Histogram for 'speed'\nhist(cars$speed, col = \"darkorange\", border = \"black\", main = \"Histogram of Speed\", xlab = \"Speed\", ylab = \"Frequency\")\n\n\n\n\n\n\n\n\n# Frequency counts for 'speed'\nspeed_freq &lt;- table(cars$speed)\n# Vertical Barchart\nbarplot(speed_freq, col = \"darkred\", main = \"Vertical Barchart of Speed Frequency\", xlab = \"Speed\", ylab = \"Frequency\")\n\n\n\n\n\n\n\n\nbarplot(speed_freq, col = \"darkgreen\", main = \"Horizontal Barchart of Speed Frequency\", xlab = \"Frequency\", ylab = \"Speed\", horiz = TRUE)\n\n\n\n\n\n\n\n\npie(speed_freq, labels = names(speed_freq), col = c(\"#D32F2F\", \"#1976D2\", \"#388E3C\", \"#F57C00\", \"#8E24AA\"), main = \"Piechart of Speed Frequency\")\n\n\n\n\n\n\n\n\nboxplot(cars, col = c(\"#FF5722\", \"#2196F3\"), main = \"Boxplot of Speed and Distance\", names = c(\"Speed\", \"Distance\"), ylab = \"Values\")\n\n\n\n\n\n\n\n\nplot(cars$speed, cars$dist, col = \"#E91E63\", pch = 16, main = \"Scatterplot of Speed vs. Distance\", xlab = \"Speed\", ylab = \"Distance\")"
+  },
+  {
+    "objectID": "Assignment5.html#histogram",
+    "href": "Assignment5.html#histogram",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "data(\"cars\")\n\n# Histogram for 'speed'\nhist(cars$speed, col = \"darkorange\", border = \"black\", main = \"Histogram of Speed\", xlab = \"Speed\", ylab = \"Frequency\")"
+  },
+  {
+    "objectID": "Assignment5.html#bar-charts",
+    "href": "Assignment5.html#bar-charts",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "# Frequency counts for 'speed'\nspeed_freq &lt;- table(cars$speed)\n# Vertical Barchart\nbarplot(speed_freq, col = \"darkred\", main = \"Vertical Barchart of Speed Frequency\", xlab = \"Speed\", ylab = \"Frequency\")"
+  },
+  {
+    "objectID": "Assignment5.html#horizontal-bar-chart",
+    "href": "Assignment5.html#horizontal-bar-chart",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "barplot(speed_freq, col = \"darkgreen\", main = \"Horizontal Barchart of Speed Frequency\", xlab = \"Frequency\", ylab = \"Speed\", horiz = TRUE)"
+  },
+  {
+    "objectID": "Assignment5.html#pie-chart",
+    "href": "Assignment5.html#pie-chart",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "pie(speed_freq, labels = names(speed_freq), col = c(\"#D32F2F\", \"#1976D2\", \"#388E3C\", \"#F57C00\", \"#8E24AA\"), main = \"Piechart of Speed Frequency\")"
+  },
+  {
+    "objectID": "Assignment5.html#boxplot",
+    "href": "Assignment5.html#boxplot",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "boxplot(cars, col = c(\"#FF5722\", \"#2196F3\"), main = \"Boxplot of Speed and Distance\", names = c(\"Speed\", \"Distance\"), ylab = \"Values\")"
+  },
+  {
+    "objectID": "Assignment5.html#scatterplot",
+    "href": "Assignment5.html#scatterplot",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "plot(cars$speed, cars$dist, col = \"#E91E63\", pch = 16, main = \"Scatterplot of Speed vs. Distance\", xlab = \"Speed\", ylab = \"Distance\")"
+  },
+  {
+    "objectID": "Assignment5.html#histogram-1",
+    "href": "Assignment5.html#histogram-1",
+    "title": "Assignment 5",
+    "section": "Histogram",
+    "text": "Histogram\n\ndata(\"cars\")\nlibrary(ggplot2)\n\nggplot(cars, aes(x = speed)) + \n  geom_histogram(fill = \"#FF7043\", color = \"black\", bins = 10) +\n  labs(title = \"Histogram of Speed\", x = \"Speed\", y = \"Frequency\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "Assignment5.html#bar-chart",
+    "href": "Assignment5.html#bar-chart",
+    "title": "Assignment 5",
+    "section": "Bar Chart",
+    "text": "Bar Chart\n\nggplot(as.data.frame(speed_freq), aes(x = Var1, y = Freq)) + \n  geom_bar(stat = \"identity\", fill = \"#1976D2\") +\n  labs(title = \"Vertical Barchart of Speed Frequency\", x = \"Speed\", y = \"Frequency\") +\n  theme_classic()"
+  },
+  {
+    "objectID": "Assignment5.html#horizontal-bar-chart-1",
+    "href": "Assignment5.html#horizontal-bar-chart-1",
+    "title": "Assignment 5",
+    "section": "Horizontal Bar Chart",
+    "text": "Horizontal Bar Chart\n\nggplot(as.data.frame(speed_freq), aes(x = Var1, y = Freq)) + \n  geom_bar(stat = \"identity\", fill = \"#FF5722\") +\n  labs(title = \"Horizontal Barchart of Speed Frequency\", x = \"Frequency\", y = \"Speed\") +\n  coord_flip() +\n  theme_classic()"
+  },
+  {
+    "objectID": "Assignment5.html#pie-chart-1",
+    "href": "Assignment5.html#pie-chart-1",
+    "title": "Assignment 5",
+    "section": "Pie Chart",
+    "text": "Pie Chart\n\nggplot(as.data.frame(speed_freq), aes(x = \"\", y = Freq, fill = Var1)) + \n  geom_bar(width = 1, stat = \"identity\") +\n  coord_polar(theta = \"y\") +\n  labs(title = \"Piechart of Speed Frequency\") +\n  scale_fill_brewer(palette = \"Set3\") +  # A color palette that adjusts based on the number of categories\n  theme_void()"
+  },
+  {
+    "objectID": "Assignment5.html#boxplot-1",
+    "href": "Assignment5.html#boxplot-1",
+    "title": "Assignment 5",
+    "section": "Boxplot",
+    "text": "Boxplot\n\nggplot(cars) + \n  geom_boxplot(aes(x = \"Speed\", y = speed), fill = \"lightgreen\", width = 0.5) +\n  geom_boxplot(aes(x = \"Distance\", y = dist), fill = \"lightblue\", width = 0.5) +\n  labs(title = \"Boxplot of Speed and Distance\", x = \"\", y = \"Values\") +\n  theme_light()"
+  },
+  {
+    "objectID": "Assignment5.html#scatterplot-1",
+    "href": "Assignment5.html#scatterplot-1",
+    "title": "Assignment 5",
+    "section": "Scatterplot",
+    "text": "Scatterplot\n\nggplot(cars, aes(x = speed, y = dist)) + \n  geom_point(color = \"darkred\", size = 3) +\n  labs(title = \"Scatterplot of Speed vs. Distance\", x = \"Speed\", y = \"Distance\") +\n  theme_minimal()"
   },
   {
     "objectID": "index.html",

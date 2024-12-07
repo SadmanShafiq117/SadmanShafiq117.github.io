@@ -1,0 +1,130 @@
+---
+title: "Assignment 5"
+layout: page
+---
+
+# R base charts
+
+## Histogram
+
+```{r, warning=FALSE}
+data("cars")
+
+# Histogram for 'speed'
+hist(cars$speed, col = "darkorange", border = "black", main = "Histogram of Speed", xlab = "Speed", ylab = "Frequency")
+
+```
+## Bar Charts
+```{r, warning=FALSE}
+
+# Frequency counts for 'speed'
+speed_freq <- table(cars$speed)
+# Vertical Barchart
+barplot(speed_freq, col = "darkred", main = "Vertical Barchart of Speed Frequency", xlab = "Speed", ylab = "Frequency")
+
+```
+
+## Horizontal Bar Chart
+```{r, warning=FALSE}
+
+barplot(speed_freq, col = "darkgreen", main = "Horizontal Barchart of Speed Frequency", xlab = "Frequency", ylab = "Speed", horiz = TRUE)
+
+```
+
+## Pie Chart
+```{r, warning=FALSE}
+pie(speed_freq, labels = names(speed_freq), col = c("#D32F2F", "#1976D2", "#388E3C", "#F57C00", "#8E24AA"), main = "Piechart of Speed Frequency")
+```
+
+## Boxplot
+
+```{r, warning=FALSE}
+
+boxplot(cars, col = c("#FF5722", "#2196F3"), main = "Boxplot of Speed and Distance", names = c("Speed", "Distance"), ylab = "Values")
+
+```
+
+## Scatterplot
+```{r, warning=FALSE}
+
+plot(cars$speed, cars$dist, col = "#E91E63", pch = 16, main = "Scatterplot of Speed vs. Distance", xlab = "Speed", ylab = "Distance")
+
+```
+
+# Charts with ggplot 2
+
+## Histogram
+```{r, warning=FALSE}
+data("cars")
+library(ggplot2)
+
+ggplot(cars, aes(x = speed)) + 
+  geom_histogram(fill = "#FF7043", color = "black", bins = 10) +
+  labs(title = "Histogram of Speed", x = "Speed", y = "Frequency") +
+  theme_minimal()
+
+```
+
+## Bar Chart
+
+```{r, warning=FALSE}
+
+ggplot(as.data.frame(speed_freq), aes(x = Var1, y = Freq)) + 
+  geom_bar(stat = "identity", fill = "#1976D2") +
+  labs(title = "Vertical Barchart of Speed Frequency", x = "Speed", y = "Frequency") +
+  theme_classic()
+
+```
+
+## Horizontal Bar Chart
+
+```{r, warning=FALSE}
+
+ggplot(as.data.frame(speed_freq), aes(x = Var1, y = Freq)) + 
+  geom_bar(stat = "identity", fill = "#FF5722") +
+  labs(title = "Horizontal Barchart of Speed Frequency", x = "Frequency", y = "Speed") +
+  coord_flip() +
+  theme_classic()
+
+```
+
+## Pie Chart
+
+
+```{r, warning=FALSE}
+
+
+ggplot(as.data.frame(speed_freq), aes(x = "", y = Freq, fill = Var1)) + 
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  labs(title = "Piechart of Speed Frequency") +
+  scale_fill_brewer(palette = "Set3") +  # A color palette that adjusts based on the number of categories
+  theme_void()
+
+
+```
+
+## Boxplot
+```{r, warning=FALSE}
+
+ggplot(cars) + 
+  geom_boxplot(aes(x = "Speed", y = speed), fill = "lightgreen", width = 0.5) +
+  geom_boxplot(aes(x = "Distance", y = dist), fill = "lightblue", width = 0.5) +
+  labs(title = "Boxplot of Speed and Distance", x = "", y = "Values") +
+  theme_light()
+
+```
+## Scatterplot
+```{r, warning=FALSE}
+
+ggplot(cars, aes(x = speed, y = dist)) + 
+  geom_point(color = "darkred", size = 3) +
+  labs(title = "Scatterplot of Speed vs. Distance", x = "Speed", y = "Distance") +
+  theme_minimal()
+
+```
+
+
+# Exporting Charts
+
+Charts can be exported in pdf(), jpeg(), svg(), tiff(), bmp() formats

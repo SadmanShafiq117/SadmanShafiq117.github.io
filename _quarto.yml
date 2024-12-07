@@ -8,8 +8,24 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: Assignment1.html
-        text: Assignment 1
+      - text: "DataViz Assignments"
+        menu: 
+          - href: Assignment1.html
+            text: "Assignment 1"
+          - href: Assignment2.html
+            text: "Assignment 2"
+          - href: Assignment3.html
+            text: "Assignment 3"
+          - href: Assignment4.html
+            text: "Assignment 4"
+          - href: Assignment5.html
+            text: "Assignment 5"
+          - href: Assignment6.html
+            text: "Assignment 6"  
+          - href: Assignment7.html
+            text: "Assignment 7"  
+          - href: Assignment8.html
+            text: "Assignment 8"  
 
 format:
   html:
