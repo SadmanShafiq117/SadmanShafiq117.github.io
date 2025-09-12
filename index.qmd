@@ -4,6 +4,6 @@ title: "Sadman Shafiq's Website"
 
 Hi, I am Sadman Shafiq, a PhD candidate in the PPPE program in UTD.
 
-For now, I am using this website just for the Data Visualization course. 
+For now, I am using this website just for course assignments. 
 
 
