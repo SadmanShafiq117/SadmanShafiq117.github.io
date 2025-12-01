@@ -5,5 +5,6 @@ layout: page
 
 # About the Site
 
-This site is powered by Quarto and will display my academic profile. Currectly, I am using this website to upload my assignments for different courses. I will be updating my full profile by the time I enter the Job Market. For the site, the “Cosmo” theme is specified in the _quarto.yml configuration, where it can be further customized as needed. The theme is fully responsive, so the layout adjusts to different screen sizes while maintaining a consistent, professional appearance across devices. The site uses a top navigation bar to provide quick access to sections like “Home”, “Research”, “Teaching”, and “Assignments”, and the Home page also includes a direct link to download my CV (which is currently not up to date).
----
+This site is powered by Quarto and will display my academic profile. Currectly, I am using this website to upload my assignments for different courses. I will be updating my full profile by the time I enter the Job Market. 
+
+For the site, the “Cosmo” theme is specified in the \_quarto.yml configuration, where it can be further customized as needed. The theme is fully responsive, so the layout adjusts to different screen sizes while maintaining a consistent, professional appearance across devices. The site uses a top navigation bar to provide quick access to sections like “Home”, “Research”, “Teaching”, and “Assignments”, and the Home page also includes a direct link to download my CV (which is currently not up to date).
