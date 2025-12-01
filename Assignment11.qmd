@@ -4,7 +4,7 @@ author: "Sadman Shafiq"
 editor: visual
 ---
 
-#About the Site
+# About the Site
 
 This site is powered by Quarto and will display my academic profile. Currectly, I am using this website to upload my assignments for different courses. I will be updating my full profile by the time I enter the Job Market.
 
