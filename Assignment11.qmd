@@ -1,6 +1,6 @@
 ---
 title: "Assignment 1"
-editor: visual
+layout: page
 ---
 
 # About the Site
