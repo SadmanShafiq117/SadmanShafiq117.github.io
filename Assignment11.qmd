@@ -1,6 +1,5 @@
 ---
 title: "Assignment 1"
-author: "Sadman Shafiq"
 editor: visual
 ---
 
