@@ -11,7 +11,7 @@ website:
       - text: "EPPS 6302 Assignments"
         menu: 
           - href: Assignment11.html
-            text: "Assignment I"
+            text: "Assignment 1"
           - href: Assignment12.html
             text: "Assignment 2"
       - text: "DataViz Assignments"
