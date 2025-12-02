@@ -11,6 +11,7 @@ library(ggplot2)
 library(dplyr)
 library(reshape2) 
 
+
 website_data <- read.csv("C:/Users/Sadman Shafiq/Box Sync/Courses/10Fall25_semester/EPPS/Assignment2/google_trends_web.csv")
 
 # Day to Date
