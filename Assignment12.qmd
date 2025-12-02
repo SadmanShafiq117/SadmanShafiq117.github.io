@@ -5,13 +5,21 @@ layout: page
 
 # Analysis by Downloading Google Trends Data
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> fa712d1cebe4a17ec93a56d74a32c021f2ffa041
 ```{r, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 library(reshape2) 
 
 
+<<<<<<< HEAD
 website_data <- read.csv("C:/Users/raad_/Box Sync/Courses/10Fall25_semester/EPPS/Assignment2/google_trends_web.csv")
+=======
+website_data <- read.csv("C:/Users/Sadman Shafiq/Box Sync/Courses/10Fall25_semester/EPPS/Assignment2/google_trends_web.csv")
+>>>>>>> fa712d1cebe4a17ec93a56d74a32c021f2ffa041
 
 # Day to Date
 website_data$Day <- as.Date(website_data$Day, format = "%m/%d/%Y")
@@ -36,7 +44,10 @@ ggplot(website_long, aes(x = Day, y = Interest, color = Term)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> fa712d1cebe4a17ec93a56d74a32c021f2ffa041
 The provided code utilizes three CSV files obtained from Google Trends. However, the datasets require preprocessing due to inconsistencies and formatting issues unsuitable for direct R analysis. Data cleaning steps were thus essential to enable effective visualization.
 
 # Analysis by gtrendsR
@@ -54,7 +65,10 @@ trends <- gtrends(
   gprop = "web"                     
 )
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fa712d1cebe4a17ec93a56d74a32c021f2ffa041
 # Extract the interest over time
 trends_data <- trends$interest_over_time
 
@@ -78,5 +92,10 @@ ggplot(trends_data, aes(x = date, y = hits, color = keyword)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
+<<<<<<< HEAD
 
 Using the gtrendsR package produces essentially the same substantive insights as downloading Google Trends data manually. The main distinction lies in workflow: gtrendsR automates the retrieval and returns data already structured for R, making the process smoother and reducing manual cleaning, while the underlying trend patterns remain unchanged.
+=======
+Using the gtrendsR package produces essentially the same substantive insights as downloading Google Trends data manually. The main distinction lies in workflow: gtrendsR automates the retrieval and returns data already structured for R, making the process smoother and reducing manual cleaning, while the underlying trend patterns remain unchanged.
+
+>>>>>>> fa712d1cebe4a17ec93a56d74a32c021f2ffa041
