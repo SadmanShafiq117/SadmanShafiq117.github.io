@@ -1,0 +1,6 @@
+---
+title: "Assignment 2"
+layout: page
+---
+
+# Analysis by Downloading Google Trends Data
