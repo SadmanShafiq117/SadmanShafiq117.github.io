@@ -4,3 +4,37 @@ layout: page
 ---
 
 # Analysis by Downloading Google Trends Data
+
+
+```{r, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(reshape2) 
+
+
+website_data <- read.csv("google_trends_web.csv")
+
+# Day to Date
+website_data$Day <- as.Date(website_data$Day, format = "%m/%d/%Y")
+
+# Reshape to long format 
+website_long <- reshape2::melt(website_data, id.vars = "Day", 
+                               variable.name = "Term", 
+                               value.name = "Interest")
+
+# Plot
+ggplot(website_long, aes(x = Day, y = Interest, color = Term)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  labs(
+    title = "Google Trends: Search Interest (Website Download)",
+    subtitle = "Daily search interest for Trump, Kamala Harris, and Election (Aug1 to Nov4 2024)",
+    x = "Date",
+    y = "Search Interest (0–100)"
+  ) +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+The provided code utilizes three CSV files obtained from Google Trends. However, the datasets require preprocessing due to inconsistencies and formatting issues unsuitable for direct R analysis. Data cleaning steps were thus essential to enable effective visualization.
