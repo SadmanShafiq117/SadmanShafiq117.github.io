@@ -204,6 +204,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#analysis-by-downloading-google-trends-data" id="toc-analysis-by-downloading-google-trends-data" class="nav-link active" data-scroll-target="#analysis-by-downloading-google-trends-data">Analysis by Downloading Google Trends Data</a></li>
+  <li><a href="#analysis-by-gtrendsr" id="toc-analysis-by-gtrendsr" class="nav-link" data-scroll-target="#analysis-by-gtrendsr">Analysis by gtrendsR</a></li>
   </ul>
 </nav>
     </div>
@@ -237,10 +238,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Downloading packages -------------------------------------------------------
-- Downloading reshape2 from CRAN ...            OK [119.8 Kb in 0.12s]
-- Downloading plyr from CRAN ...                OK [769.3 Kb in 0.19s]
-- Downloading Rcpp from CRAN ...                OK [2.1 Mb in 0.27s]
-Successfully downloaded 3 packages in 1.6 seconds.
+- Downloading reshape2 from CRAN ...            OK [119.8 Kb in 0.17s]
+- Downloading plyr from CRAN ...                OK [769.3 Kb in 0.18s]
+- Downloading Rcpp from CRAN ...                OK [2.1 Mb in 0.18s]
+Successfully downloaded 3 packages in 1.7 seconds.
 
 The following package(s) will be installed:
 - plyr     [1.8.9]
@@ -249,10 +250,10 @@ The following package(s) will be installed:
 These packages will be installed into "~/work/SadmanShafiq117.github.io/SadmanShafiq117.github.io/renv/library/linux-ubuntu-noble/R-4.4/x86_64-pc-linux-gnu".
 
 # Installing packages --------------------------------------------------------
-- Installing Rcpp ...                           OK [installed binary and cached in 0.37s]
-- Installing plyr ...                           OK [installed binary and cached in 0.28s]
-- Installing reshape2 ...                       OK [installed binary and cached in 0.42s]
-Successfully installed 3 packages in 1.2 seconds.</code></pre>
+- Installing Rcpp ...                           OK [installed binary and cached in 0.42s]
+- Installing plyr ...                           OK [installed binary and cached in 0.27s]
+- Installing reshape2 ...                       OK [installed binary and cached in 0.44s]
+Successfully installed 3 packages in 1.4 seconds.</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -291,6 +292,86 @@ Successfully installed 3 packages in 1.2 seconds.</code></pre>
 </div>
 </div>
 <p>The provided code utilizes three CSV files obtained from Google Trends. However, the datasets require preprocessing due to inconsistencies and formatting issues unsuitable for direct R analysis. Data cleaning steps were thus essential to enable effective visualization.</p>
+</section>
+<section id="analysis-by-gtrendsr" class="level1">
+<h1>Analysis by gtrendsR</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"gtrendsR"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"gtrendsR"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Downloading packages -------------------------------------------------------
+- Downloading gtrendsR from CRAN ...            OK [1.8 Mb in 0.47s]
+- Downloading anytime from CRAN ...             OK [254.4 Kb in 0.41s]
+- Downloading BH from CRAN ...                  OK [12.7 Mb in 0.4s]
+Successfully downloaded 3 packages in 2.8 seconds.
+
+The following package(s) will be installed:
+- anytime  [0.3.12]
+- BH       [1.87.0-1]
+- gtrendsR [1.5.2]
+These packages will be installed into "~/work/SadmanShafiq117.github.io/SadmanShafiq117.github.io/renv/library/linux-ubuntu-noble/R-4.4/x86_64-pc-linux-gnu".
+
+# Installing packages --------------------------------------------------------
+- Installing BH ...                             OK [installed binary and cached in 2.3s]
+- Installing anytime ...                        OK [installed binary and cached in 0.28s]
+- Installing gtrendsR ...                       OK [installed binary and cached in 0.65s]
+Successfully installed 3 packages in 4 seconds.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtrendsR)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="st">"2024-08-01 2024-11-04"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>geo   <span class="ot">&lt;-</span> <span class="st">"US"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fetch_trend <span class="ot">&lt;-</span> <span class="cf">function</span>(term) {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Fetching:"</span>, term, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">gtrends</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">keyword =</span> term,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> dates,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">geo =</span> geo,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">gprop =</span> <span class="st">"web"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">hl =</span> <span class="st">"en-US"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="dv">25</span>)  </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res<span class="sc">$</span>interest_over_time)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>terms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Trump"</span>, <span class="st">"Kamala Harris"</span>, <span class="st">"Election"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>trends_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(terms, fetch_trend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fetching: Trump 
+Fetching: Kamala Harris 
+Fetching: Election </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>trends_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(trends_list)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>trends_data<span class="sc">$</span>keyword <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Trump"</span>, <span class="st">"Donald.Trump"</span>, trends_data<span class="sc">$</span>keyword)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>trends_data<span class="sc">$</span>keyword <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Kamala Harris"</span>, <span class="st">"Kamala.Harris"</span>, trends_data<span class="sc">$</span>keyword)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(trends_data, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> hits, <span class="at">color =</span> keyword)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Google Trends: Search Interest (gtrendsR Package)"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Daily search interest for Trump, Kamala Harris, and Election (Aug1 to Nov4 2024)"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Search Interest (0–100)"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Assignment12_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using the gtrendsR package produces essentially the same substantive insights as downloading Google Trends data manually. The main distinction lies in workflow: gtrendsR automates the retrieval and returns data already structured for R, making the process smoother and reducing manual cleaning, while the underlying trend patterns remain unchanged.</p>
 
 
 </section>
