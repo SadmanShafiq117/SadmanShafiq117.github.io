@@ -42,3 +42,53 @@ ggplot(website_long, aes(x = Day, y = Interest, color = Term)) +
 
 ```
 The provided code utilizes three CSV files obtained from Google Trends. However, the datasets require preprocessing due to inconsistencies and formatting issues unsuitable for direct R analysis. Data cleaning steps were thus essential to enable effective visualization.
+
+# Analysis by gtrendsR
+
+```{r}
+if (!requireNamespace("gtrendsR", quietly = TRUE)) {
+  install.packages("gtrendsR")
+}
+library(gtrendsR)
+
+
+dates <- "2024-08-01 2024-11-04"
+geo   <- "US"
+
+fetch_trend <- function(term) {
+  cat("Fetching:", term, "\n")
+  res <- gtrends(
+    keyword = term,
+    time = dates,
+    geo = geo,
+    gprop = "web",
+    hl = "en-US"
+  )
+  Sys.sleep(25)  
+  return(res$interest_over_time)
+}
+
+terms <- c("Trump", "Kamala Harris", "Election")
+trends_list <- lapply(terms, fetch_trend)
+trends_data <- bind_rows(trends_list)
+
+trends_data$keyword <- gsub("Trump", "Donald.Trump", trends_data$keyword)
+trends_data$keyword <- gsub("Kamala Harris", "Kamala.Harris", trends_data$keyword)
+
+
+# Plot
+ggplot(trends_data, aes(x = date, y = hits, color = keyword)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  labs(
+    title = "Google Trends: Search Interest (gtrendsR Package)",
+    subtitle = "Daily search interest for Trump, Kamala Harris, and Election (Aug1 to Nov4 2024)",
+    x = "Date",
+    y = "Search Interest (0–100)"
+  ) +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+Using the gtrendsR package produces essentially the same substantive insights as downloading Google Trends data manually. The main distinction lies in workflow: gtrendsR automates the retrieval and returns data already structured for R, making the process smoother and reducing manual cleaning, while the underlying trend patterns remain unchanged.
