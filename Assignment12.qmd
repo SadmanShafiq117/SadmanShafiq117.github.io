@@ -7,6 +7,10 @@ layout: page
 
 
 ```{r, message=FALSE, warning=FALSE}
+if (!requireNamespace("reshape2", quietly = TRUE)) {
+  install.packages("reshape2")
+}
+
 library(ggplot2)
 library(dplyr)
 library(reshape2) 
