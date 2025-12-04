@@ -1,0 +1,122 @@
+---
+title: "Assignemnt 3: Mapping Census Data"
+layout: page
+---
+
+
+```{r warning=FALSE, message=FALSE}
+pkgs <- c("tidycensus", "tigris", "sf", "dplyr", "ggplot2", "readr")
+invisible(lapply(pkgs, function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}))
+
+library(tidycensus)
+library(tigris)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+census_api_key("0e57f7109463617cecae519295bb0de8d6e581e4", install = FALSE)
+```
+
+
+```{r warning=FALSE, message=FALSE}
+
+ca_data <- get_acs(
+  geography = "county",
+  variables = c(
+    median_hh_income = "B19013_001",
+    below_poverty = "B17001_002"
+  ),
+  state = "CA",
+  year = 2023,
+  geometry = TRUE,        
+  output = "wide"         
+)
+
+ca_data <- ca_data %>%
+  rename(
+    median_hh_income = median_hh_incomeE,
+    median_hh_income_moe = median_hh_incomeM,
+    below_poverty = below_povertyE,
+    below_poverty_moe = below_povertyM
+  ) %>%
+  mutate(
+    median_hh_income = as.numeric(median_hh_income),
+    below_poverty = as.numeric(below_poverty)
+  )
+
+```
+
+
+# A. Choropleth Map – Median Household Income
+
+```{r warning=FALSE, message=FALSE}
+# Median household income by county
+map_plot <- ggplot(ca_data) +
+  geom_sf(aes(fill = median_hh_income), color = "white", size = 0.1) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    na.value = "lightgray",
+    labels = scales::label_dollar(scale = 1, accuracy = 1),
+    name = "Median Household Income"
+  ) +
+  labs(
+    title = "Median Household Income by County in California",
+    subtitle = "ACS 2023 5-Year Estimates",
+    caption = "Source: U.S. Census Bureau, American Community Survey (ACS) 2023 (5-year)"
+  ) +
+  theme_void() +
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5, size = 14),
+    plot.subtitle = element_text(hjust = 0.5, size = 11),
+    plot.caption = element_text(size = 9, color = "gray60"),
+    legend.position = "right"
+  )
+
+print(map_plot)
+
+```
+
+# B. Table – Top 10 Counties by Population Below Poverty
+
+```{r warning=FALSE,message=FALSE}
+# Top 10 counties with highest poverty population
+top_poverty <- ca_data %>%
+  select(NAME, below_poverty, below_poverty_moe) %>%
+  arrange(desc(below_poverty)) %>%
+  head(10) %>%
+  mutate(
+    below_poverty = scales::comma(below_poverty),
+    below_poverty_moe = paste0("±", scales::comma(below_poverty_moe))
+  )
+
+# Bottom 10 (lowest)
+bottom_poverty <- ca_data %>%
+  select(NAME, below_poverty, below_poverty_moe) %>%
+  arrange(below_poverty) %>%
+  head(10) %>%
+  mutate(
+    below_poverty = scales::comma(below_poverty),
+    below_poverty_moe = paste0("±", scales::comma(below_poverty_moe))
+  )
+
+# Combine into one table (optional)
+poverty_table <- bind_rows(
+  mutate(top_poverty, Rank = "Top 10"),
+  mutate(bottom_poverty, Rank = "Bottom 10")
+)
+
+# Print
+print(poverty_table)
+
+```
+
+# C. Interpretation
+
+The map of median household income across California counties reveals a pronounced geographic divide: the highest incomes are concentrated in coastal urban centers, particularly in the San Francisco Bay Area and parts of Southern California, where median household incomes often exceed \$125,000. In contrast, inland and rural counties, especially in the Central Valley and northeastern regions, show significantly lower median incomes, many below \$75,000. This coastal-inland disparity reflects unequal access to high-wage industries, housing markets, and economic infrastructure.
+
+The table of absolute poverty counts further illuminates California’s complex economic landscape. Los Angeles County leads with over 1.3 million people below the poverty line, by far the highest in the state, followed by other large-population counties like San Diego, Orange, and Riverside. However, because these figures represent counts rather than rates, they primarily reflect population size rather than intensity of poverty. Notably, many of these high poverty count counties also have high median incomes, underscoring the coexistence of wealth and need in California’s largest metropolitan areas. Together, the map and table highlight a dual reality: significant affluence in urban cores alongside widespread economic hardship, calling for nuanced, place-based policy responses.

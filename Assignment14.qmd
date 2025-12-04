@@ -1,0 +1,89 @@
+---
+title: "Assignment 4"
+layout: page
+---
+# 1
+
+```{r warning=FALSE, message=FALSE}
+
+pkgs <- c("rvest", "tidyverse", "stringr")
+invisible(lapply(pkgs, function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}))
+
+library(rvest)
+library(tidyverse)
+library(stringr)
+
+# URL
+url <- "https://en.wikipedia.org/wiki/List_of_countries_by_foreign-exchange_reserves"
+
+page <- read_html(url)
+
+raw_table <- page %>%
+  html_nodes("table.wikitable") %>%
+  html_table(fill = TRUE)
+
+
+df <- raw_table[[1]]
+
+df <- df[3:198, c(1,2,3,5,7)]
+
+colnames(df) <- c("Country", "Continent", "ForEx_Inc_Gold", "ForEx_Exc_Gold", "ReportDate")
+
+df_clean <- df %>%
+  mutate(across(everything(), ~ str_remove_all(.x, "\\[\\d+\\]"))) %>%
+  mutate(across(everything(), ~ trimws(.x))) %>%   
+  filter(!is.na(Country), Country != "") %>%
+  mutate(
+    ForEx_Inc_Gold = as.numeric(str_remove_all(ForEx_Inc_Gold, ",")),
+    ForEx_Exc_Gold = as.numeric(str_remove_all(ForEx_Exc_Gold, ","))
+  ) %>%
+  select(Country, Continent, ForEx_Inc_Gold, ForEx_Exc_Gold, ReportDate)
+
+df_clean$ReportDate <- as.Date(df_clean$ReportDate, format = "%d %b %Y")
+#result
+head(df_clean)
+
+```
+
+# Scrapping Other Table
+
+```{r warning=FALSE, message=FALSE}
+
+# URL
+url <- "https://en.wikipedia.org/wiki/List_of_Asian_countries_by_population"
+
+
+page <- read_html(url)
+
+raw_table <- page %>%
+  html_nodes("table.wikitable") %>%
+  html_table(fill = TRUE)
+
+df <- raw_table[[1]]
+
+df <- df[, c(2,3,5,6,8)]
+
+colnames(df) <- c("Country", "%Asia", "Population", "%Growth", "ReportDate")
+
+df_clean <- df %>%
+  mutate(across(everything(), ~ str_remove_all(.x, "\\[\\d+\\]"))) %>%
+  mutate(across(everything(), ~ trimws(.x))) %>%   
+  filter(!is.na(Country), Country != "") %>%
+  mutate(
+    Population = as.numeric(str_remove_all(Population, ",")),
+  ) %>%
+  select(Country, `%Asia`, Population, `%Growth`, ReportDate)
+
+df_clean$ReportDate <- as.Date(df_clean$ReportDate, format = "%d %b %Y")
+#result
+head(df_clean)
+
+```
+
+# Discussion
+
+I modified the code to scrape the Wikipedia page listing Aian countries by population. Using a similar approach, virtually any HTML-based table can be extracted and transformed into a tidy data frame. The script leverages the rvest package to read the page’s HTML, then selects the target table using XPath. After extraction, I cleaned the data by stripping footnote markers and citations from the country and date columns, and converted the population and world-share percentage columns to numeric format to facilitate analysis. To confirm the process worked correctly, I displayed the first 10 rows of the cleaned data frame.
