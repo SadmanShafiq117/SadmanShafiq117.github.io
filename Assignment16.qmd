@@ -5,7 +5,7 @@ layout: page
 
 
 ```{r warning=FALSE, message=FALSE}
-pkgs <- c("quanteda", "quanteda.textmodels", "quanteda.textplots", "readr", "dplyr", "ggplot2", "stringr", "tibble", "quanteda.textstats")
+pkgs <- c("quanteda", "quanteda.textmodels", "quanteda.textplots", "readr", "dplyr", "ggplot2", "stringr", "tibble", "quanteda.textstats","igraph")
 invisible(lapply(pkgs, function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     install.packages(pkg)
@@ -21,6 +21,7 @@ library(ggplot2)
 library(stringr)
 library(tibble)
 library(quanteda.textstats)
+library(igraph)
 
 
 #Data
