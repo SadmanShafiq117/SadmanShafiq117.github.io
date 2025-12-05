@@ -110,7 +110,6 @@ poverty_table <- bind_rows(
   mutate(bottom_poverty, Rank = "Bottom 10")
 )
 
-# Print
 print(poverty_table)
 
 ```
