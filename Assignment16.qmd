@@ -1,0 +1,244 @@
+---
+title: "Assignment 6"
+layout: page
+---
+
+
+```{r warning=FALSE, message=FALSE}
+pkgs <- c("quanteda", "quanteda.textmodels", "quanteda.textplots", "readr", "dplyr", "ggplot2", "stringr", "tibble", "quanteda.textstats")
+invisible(lapply(pkgs, function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}))
+
+library(quanteda)
+library(quanteda.textmodels)
+library(quanteda.textplots)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(tibble)
+library(quanteda.textstats)
+
+
+#Data
+
+summit <- read_csv(
+  "https://raw.githubusercontent.com/datageneration/datamethods/master/textanalytics/summit_11162021.csv"
+)
+
+#Preprocessing
+
+clean_tweet_text <- function(x) {
+  x %>%
+    str_replace_all("http[^\\s]+", "") %>%         # URLs
+    str_replace_all("RT\\s+@\\w+:", "") %>%        # RT flag
+    str_replace_all("@\\w+", "") %>%               # remove @mentions (kept separately later)
+    str_replace_all("#", "") %>%                   # remove hash marks
+    str_replace_all("[[:punct:]]+", " ") %>%       # punctuation
+    str_squish() %>%                               # collapse whitespace
+    tolower()
+}
+
+summit <- summit %>%
+  mutate(
+    text_clean = clean_tweet_text(text),
+    text_nohash = str_replace_all(text, "#", "")
+  )
+
+#Tokenization and dfm
+
+toks <- tokens(
+  summit$text_clean,
+  remove_punct = TRUE,
+  remove_numbers = TRUE
+) %>%
+  tokens_remove(stopwords("english")) %>%
+  tokens_remove(c("rt", "amp")) # common Twitter junk tokens
+
+dfm_sum <- dfm(toks) %>%
+  dfm_trim(min_termfreq = 5)
+
+# Top terms
+top_terms <- topfeatures(dfm_sum, 30)
+print(top_terms)
+
+#LSA
+
+dfm_tfidf <- dfm_tfidf(dfm_sum)
+
+#  Convert dfm to a regular matrix 
+m <- as.matrix(dfm_tfidf)
+
+# Perform truncated SVD (keep 4 dimensions)
+svd_fit <- svd(m, nu = 4, nv = 0)  # nv = 0 saves time 
+
+# Compute document coordinates
+doc_matrix <- svd_fit$u[, 1:4, drop = FALSE] %*% diag(svd_fit$d[1:4])
+
+# rownames (document names from dfm)
+rownames(doc_matrix) <- docnames(dfm_tfidf)
+
+lsa_model_docs <- doc_matrix
+
+# Document coordinates
+doc_coords <- as.data.frame(lsa_model_docs) %>%
+  rownames_to_column("doc_id") %>%
+  mutate(doc_id = as.numeric(doc_id))
+
+# Add metadata
+if ("user" %in% names(summit)) {
+  doc_coords <- doc_coords %>%
+    left_join(
+      summit %>% mutate(doc_id = row_number()) %>% select(doc_id, user),
+      by = "doc_id"
+    )
+}
+
+
+# Hashtag analysis (network)
+
+hashtags <- tokens(
+  summit$text,
+  remove_punct = FALSE
+) %>%
+  tokens_select("#*", selection = "keep") %>%
+  dfm()
+
+top_hashtags <- topfeatures(hashtags, 30)
+print(top_hashtags)
+
+tag_fcm <- fcm(hashtags)
+top_tagnames <- names(top_hashtags)
+
+tag_fcm_sel <- fcm_select(tag_fcm, pattern = top_tagnames)
+
+textplot_network(
+  tag_fcm_sel,
+  min_freq = 18,
+  edge_alpha = 0.7,
+  edge_size = 1
+)
+
+
+# User mention network (@users)
+
+
+user_tokens <- tokens(
+  summit$text,
+  remove_punct = FALSE
+) %>%
+  tokens_select("@*", selection = "keep")
+
+user_dfm <- dfm(user_tokens)
+top_users <- topfeatures(user_dfm, 30)
+
+user_fcm <- fcm(user_dfm)
+user_fcm_sel <- fcm_select(user_fcm, names(top_users))
+
+textplot_network(
+  user_fcm_sel,
+  min_freq = 10,
+  edge_alpha = 0.8
+)
+
+
+# Save output files
+
+save_path <- "./assignment_6"
+
+write_rds(dfm_sum, paste0(save_path, "dfm_summit.rds"))
+write_csv(doc_coords, paste0(save_path, "lsaDocumentCoords.csv"))
+
+message("Files saved successfully to:")
+```
+
+
+```{r warning=FALSE, message=FALSE}
+# Analyzing 3 different eras
+
+# Define historical eras
+
+inaug <- data_corpus_inaugural
+
+inaug$Era <- case_when(
+  inaug$Year <= 1865 ~ "Early Republic",
+  inaug$Year > 1865 & inaug$Year <= 1945 ~ "Industrial/Progressive",
+  inaug$Year > 1945 & inaug$Year <= 1991 ~ "Cold War",
+  inaug$Year > 1991 ~ "Modern"
+)
+
+# Construct DFM by Era
+
+
+dfm_era <- tokens(inaug, remove_punct = TRUE) %>%
+  tokens_remove(stopwords("english")) %>%
+  dfm() %>%
+  dfm_group(groups = inaug$Era) %>%
+  dfm_trim(min_termfreq = 10)
+
+# Compare eras using keyness
+
+key_era <- textstat_keyness(dfm_era, target = "Modern")
+
+textplot_keyness(key_era, n = 20)
+
+# Compare frequency of ideological terms over eras
+
+focus_terms <- c("freedom", "war", "economy", "people", "nation")
+
+dfm_rel <- dfm_weight(dfm_era, scheme = "prop") * 100  
+
+# Add Era docvar
+docvars(dfm_rel, "Era") <- docnames(dfm_rel)
+
+freq_rel <- textstat_frequency(dfm_rel, groups = docvars(dfm_rel, "Era"))
+freq_focus <- subset(freq_rel, feature %in% focus_terms)
+
+
+freq_focus <- subset(freq_rel, feature %in% focus_terms)
+
+ggplot(freq_focus, aes(x = group, y = frequency, color = feature)) +
+  geom_point(size = 3) +
+  geom_line(aes(group = feature), linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "Change in Rhetorical Themes Across Historical Eras",
+    x = "Era",
+    y = "Relative Frequency (%)",
+    color = "Term"
+  )
+
+# Top words in each era (comparison wordcloud)
+
+
+textplot_wordcloud(dfm_era, comparison = TRUE, max_words = 100)
+
+# Measure stylistic / ideological shift using Wordfish
+
+wf <- textmodel_wordfish(dfm(tokens(inaug)), dir = c(1, 10))
+
+wf_df <- data.frame(
+  Year = inaug$Year,
+  Era  = inaug$Era,
+  Position = wf$docs
+)
+
+ggplot(wf_df, aes(x = Year, y = Position, color = Era)) +
+  geom_line(size = 1.1) +
+  geom_point(size = 2) +
+  theme_minimal() +
+  labs(
+    title = "Wordfish Ideological/Rhetorical Position Over Time",
+    y = "Estimated Wordfish Position"
+  )
+
+
+```
+
+# Discussion
+An examination of U.S. inaugural addresses over time reveals a clear evolution in presidential priorities. During the Early Republic and Industrial/Progressive eras, speeches primarily centered on broad themes such as governance, power, peace, and war. Their tone often reflected concerns about the nation’s global role and the functioning of its institutions.
+
+As history progresses—particularly from the Cold War era onward, the emphasis gradually shifts toward domestic matters. Terms like America, American, people, and economy appear with increasing frequency, signaling a stronger focus on citizens’ welfare and internal issues. Meanwhile, references to war or international conflict become noticeably rarer. This shift is especially evident in the second graph.

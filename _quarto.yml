@@ -18,6 +18,10 @@ website:
             text: "Assignment 3"
           - href: Assignment14.html
             text: "Assignment 4"  
+          - href: Assignment15.html
+            text: "Assignment 5"  
+          - href: Assignment16.html
+            text: "Assignment 6"    
       - text: "DataViz Assignments"
         menu: 
           - href: Assignment1.html

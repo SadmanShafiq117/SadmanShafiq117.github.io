@@ -1,0 +1,80 @@
+---
+title: "Assignment 5"
+layout: page
+---
+
+```{r}
+pkgs <- c("httr", "jsonlite", "dplyr", "purrr", "magrittr")
+invisible(lapply(pkgs, function(pkg) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}))
+
+library(httr)
+library(jsonlite)
+library(dplyr)
+library(purrr)
+library(magrittr)
+
+
+api_key <- "FVcRoQ6RsQvCTZsWEGhTWI96Ah8BGmRLvLbwLgJn"
+
+
+body <- list(
+  query = 'Trade AND "Foreign Relations Committee"',
+  pageSize = 10,         
+  offsetMark = "*"
+)
+
+resp <- POST(
+  url   = "https://api.govinfo.gov/search",
+  query = list(api_key = api_key),
+  encode = "json",
+  body = body
+)
+
+res <- jsonlite::fromJSON(content(resp, "text", encoding = "UTF-8"))
+
+govfiles <- res$results
+
+
+govfiles$index <- seq_len(nrow(govfiles))
+govfiles$pdf_url <- paste0(
+  "https://www.govinfo.gov/content/pkg/",
+  govfiles$packageId,
+  "/pdf/",
+  govfiles$packageId,
+  ".pdf"
+)
+
+save_dir <- './assignment_5'
+dir.create(save_dir, recursive = TRUE, showWarnings = FALSE)
+
+
+download_one <- function(url, id) {
+  
+  destfile <- file.path(save_dir, paste0("govfile_", id, ".pdf"))
+  
+  tryCatch({
+    download.file(url, destfile, mode = "wb")
+    Sys.sleep(runif(1, 1.5, 3))   # cooldown
+    message("Downloaded: ", destfile)
+  }, error = function(e) {
+    message("FAILED: ", url)
+  })
+}
+
+
+walk2(govfiles$pdf_url, govfiles$index, download_one)
+```
+
+# Report
+
+The document scraping process using the GovInfo API performed effectively overall. After applying several modifications to the original script, primarily refining the POST request structure, adjusting search parameters, and generating reliable PDF download links. The workflow successfully retrieved and stored the targeted government documents related to the Foreign Relations Committee. Once the queries were properly structured, data collection proceeded smoothly.
+
+However, a few practical challenges were observed during testing. The quality and relevance of retrieved results are highly sensitive to the search terms used, as small changes in phrasing or keyword arrangement can yield different sets of documents, including irrelevant, incomplete, or empty results. Moreover, the duration of the download process can increase with larger query sizes, and not all records provide accessible PDF versions.
+
+Despite these limitations, the resulting corpus remains valuable. Although the PDFs often exhibit noise, such as OCR artifacts, embedded images, or irregular text formatting, they provide a functional basis for text analysis and NLP applications. With sufficient preprocessing, they can serve as a rich dataset for extracting thematic patterns or language indicative of policy discussions.
+
+Improving search precision through refined keywords, more specific constraints (e.g., committee names, time periods, or document types), and pre-download programmatic filtering can further enhance both the relevance and quality of the final dataset.

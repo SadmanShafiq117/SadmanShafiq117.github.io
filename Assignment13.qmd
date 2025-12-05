@@ -19,7 +19,7 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 
-census_api_key("0e57f7109463617cecae519295bb0de8d6e581e4", install = FALSE)
+census_api_key("0e57f7109463617cecae519295bb0de8d6e581e4", install = TRUE, overwrite = TRUE)
 ```
 
 
@@ -104,7 +104,7 @@ bottom_poverty <- ca_data %>%
     below_poverty_moe = paste0("±", scales::comma(below_poverty_moe))
   )
 
-# Combine into one table (optional)
+# Combine into one table 
 poverty_table <- bind_rows(
   mutate(top_poverty, Rank = "Top 10"),
   mutate(bottom_poverty, Rank = "Bottom 10")
