@@ -59,11 +59,11 @@ geo   <- "US"
 dates <- "2024-08-01 2024-11-04"
 geo   <- "US"
 terms <- c("Trump", "Kamala Harris", "Election")
-cache_file <- "data/trends_data.rds"  # ← Cache path
+cache_file <- "data/google_trends_data.rds"  # ← Cache path
 
 # Fetch or load cached data
 if (!file.exists(cache_file)) {
-  cat("🔍 Google Trends data not found. Fetching fresh data...\n")
+  cat("Google Trends data not found. Fetching fresh data...\n")
   
   # SINGLE request with all terms (critical!)
   cat("Sending ONE request for:", paste(terms, collapse = ", "), "\n")
@@ -88,7 +88,7 @@ if (!file.exists(cache_file)) {
   cat("data saved to", cache_file, "\n")
   
 } else {
-  cat("📦 Loading cached Google Trends data from", cache_file, "\n")
+  cat("Loading cached Google Trends data from", cache_file, "\n")
   trends_data <- readRDS(cache_file)
 }
 
