@@ -4,3 +4,4 @@ title: "About"
 
 For now, this site is just for assignmnets. 
 
+You can view my CV [here](Documents/CV_Sadman_Shafiq.pdf).
