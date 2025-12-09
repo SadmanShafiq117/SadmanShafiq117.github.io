@@ -2,6 +2,6 @@
 title: "About"
 ---
 
-For now, this site is just for assignmnets. 
+For now, this site is just for assignments. 
 
-You can view my CV [here](Documents/CV_Sadman_Shafiq.pdf).
+
